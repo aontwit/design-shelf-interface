@@ -1,6 +1,6 @@
 // Living style guide — source of truth is DESIGN.md; this page renders every token.
 
-import { BarButton, GoButton } from './ui.jsx'
+import { BarButton } from './ui.jsx'
 
 const COLORS = [
   { c: '#010828', label: 'bg' },
@@ -84,7 +84,7 @@ export default function DesignPage({ copy }) {
         <div className="ds-samples">
           <nav className="nav liquid-glass"><a className="on">Active</a><a>Link</a><a>Link</a></nav>
           <div className="tags"><span className="liquid-glass">tag label</span><span className="liquid-glass">neon pill</span></div>
-          <GoButton label="open sample" />
+          <span className="open-cue"><span className="t">Open</span><span className="bar" /></span>
           <BarButton>Neon bar button</BarButton>
           <BarButton alt>Purple bar button</BarButton>
         </div>

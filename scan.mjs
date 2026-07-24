@@ -61,7 +61,8 @@ const found = walk(SRC)
 const items = found.map(({ full, rel, name, mtime }) => {
   const id = (rel ? rel.replace(/[\\/]/g, '-') + '-' : '') + name
   const dest = path.join(OUT_IMG, id)
-  fs.copyFileSync(full, dest)
+  // re-indexing public/screenshots itself: don't copy a file onto itself
+  if (path.resolve(full) !== path.resolve(dest)) fs.copyFileSync(full, dest)
   const p = prev[id] || {}
   return {
     id,

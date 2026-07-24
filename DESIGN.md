@@ -48,17 +48,11 @@ rounded:
   navpill: "28px"
   section: "32px"
   pill: "99px"
-  circle: "50%"
 components:
   button-bar:
     textColor: "{colors.starlight-cream}"
   button-bar-alt:
     textColor: "{colors.starlight-cream}"
-  button-go:
-    backgroundColor: "{colors.deep-violet}"
-    textColor: "{colors.starlight-cream}"
-    rounded: "{rounded.circle}"
-    size: "48px"
   tag:
     textColor: "{colors.starlight-cream}"
     rounded: "{rounded.tag}"
@@ -92,7 +86,7 @@ This system explicitly rejects: emoji in the UI, any color outside the five toke
 - Deep-navy space scene (nebula + stars + noise) behind every major section
 - All type uppercase except the cursive accent; mono for everything that isn't a heading
 - Liquid glass as the only container treatment; no opaque panels
-- One neon accent doing all interactive feedback; violet reserved for the circular go button
+- One neon accent doing all interactive feedback; violet lives only in the alt bar gradient and the nebula backdrop
 - Sections capped at 1831px; section corners 32px, media 24px
 - One entrance choreography, then restraint: reveals ≤650ms, state changes ≤300ms
 
@@ -104,7 +98,7 @@ A closed five-token palette: near-black navy, one warm-white, one loud accent, a
 - **Signal Lime** (#6FFF00): the only interactive voice. Cursive accents, button underline bars, the copy-feedback toast, nav hover/active, selection highlight. Usually rendered with `mix-blend-mode: exclusion` over imagery so it stays radioactive on any backdrop.
 
 ### Secondary
-- **Nebula Violet** (#b724ff): gradient start of the circular go button, and the alt bar-button underline. Never used alone as a flat fill.
+- **Nebula Violet** (#b724ff): gradient start of the alt bar-button underline. Never used alone as a flat fill.
 - **Deep Violet** (#7c3aed): gradient end of the same pair; also seeds the nebula backdrop glow.
 
 ### Neutral
@@ -113,7 +107,7 @@ A closed five-token palette: near-black navy, one warm-white, one loud accent, a
 
 ### Named Rules
 **The Closed Palette Rule.** Five tokens, no additions. Need a gray? Use Starlight Cream at reduced opacity. Need emphasis? Use scale or the accent, never a new hue.
-**The Gradient Cage Rule.** The violets exist only as the `135deg` pair on the go button (and the alt bar). A flat violet fill anywhere is a violation.
+**The Gradient Cage Rule.** The violets exist only inside gradients: the alt bar-button underline and the nebula backdrop. A flat violet fill anywhere is a violation.
 
 ## 3. Typography
 
@@ -140,21 +134,20 @@ A closed five-token palette: near-black navy, one warm-white, one loud accent, a
 Flat glass, not shadows. Depth comes from layering: the space scene at the bottom, liquid-glass surfaces above it (1.4px gradient edge + 4px backdrop blur + luminosity blend), and the fixed noise texture over everything at 60% lighten. Surfaces read as panes of a window, not floating cards.
 
 ### Shadow Vocabulary
-- **Violet glow** (`box-shadow: 0 10px 24px rgba(168,85,247,.5)`): the circular go button only.
 - **Glass edge** (`box-shadow: inset 0 1px 1px rgba(255,255,255,.1)`): part of the liquid-glass recipe, not a depth cue.
 
 ### Named Rules
-**The One Shadow Rule.** The go button's violet glow is the only blur shadow in the system. Any other `box-shadow` with blur is forbidden.
+**The No-Blur Rule.** No blur shadows anywhere. The glass edge inset is the system's only `box-shadow`, and it is an edge highlight, not depth.
 
 ## 5. Components
 
 Loud type, quiet chrome: interactive elements are typography plus one neon cue; containers are glass.
 
 ### Buttons
-Shared primitives live in `src/ui.jsx` (`BarButton`, `GoButton`); the CSS is `.btn` / `.go` in `orbis.css`.
+The shared primitive lives in `src/ui.jsx` (`BarButton`); the CSS is `.btn` in `orbis.css`.
 - **Bar button** (`BarButton`): no background, no border. Anton uppercase text (clamp(16px, 1.6vw, 22px)) over a 6px Signal Lime bar. Hover: the bar eases to `scaleX(.65)` from the left, 250ms. This is the primary action shape.
 - **Alt bar button** (`BarButton alt`): identical, bar carries the violet gradient. Use for the secondary action beside a neon one.
-- **Go button** (`GoButton`): 48px circle, `linear-gradient(135deg, #b724ff, #7c3aed)`, Starlight Cream chevron, the system's one glow shadow. Hover: scale 1.1; inside a card, the whole-card hover also scales it 1.06 and nudges the chevron 2px right.
+- **Open cue** (`.open-cue`): the card's action signal: "OPEN" in Anton 15px over a 4px Signal Lime bar. Decorative (the whole card is the button); the bar responds to card hover, not its own.
 - **See-all composite**: the oversized Anton "See all folders" lockup with the same neon bar; a one-off, not a primitive.
 - **CTA social links** (`.cta-links`): Mail / Twitter / Github as giant Anton words (clamp(30px, 4vw, 58px)) on the CTA's left, balancing the headline slab, each with a mono telemetry sub-label and a neon bar that draws in on hover. Replaced the old glass social box.
 
@@ -187,12 +180,12 @@ None exist yet. When one is needed: glass surface, no border at rest, Signal Lim
 - **Do** make new interactive elements answer in Signal Lime (#6FFF00): bar, glow, or text shift; nothing else signals interactivity.
 - **Do** derive every gray from Starlight Cream opacity steps (.8 / .7 / .6 / .45).
 - **Do** animate with transform and opacity only, easing on `--ease-out` / `--ease-out-expo`, and keep exits at ~75% of enter durations.
-- **Do** reuse `BarButton` / `GoButton` from `src/ui.jsx` instead of restyling `<button>`.
+- **Do** reuse `BarButton` from `src/ui.jsx` instead of restyling `<button>`.
 
 ### Don't:
 - **Don't** use emoji in the UI.
 - **Don't** introduce colors outside the five tokens; no new grays, no flat violet fills.
-- **Don't** add blur shadows anywhere except the go button's violet glow.
+- **Don't** add blur shadows anywhere; depth is glass layering, never shadow.
 - **Don't** set normal-case type in anything but Condiment.
 - **Don't** give buttons backgrounds, borders, or boxes; a bar button is a word and a bar.
 - **Don't** animate layout properties (width, height, margins) or ship motion that ignores `prefers-reduced-motion`.

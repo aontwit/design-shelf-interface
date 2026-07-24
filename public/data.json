@@ -1,10 +1,51 @@
 [
   {
+    "id": "4.png",
+    "file": "/screenshots/4.png",
+    "name": "Wrappixel commerce dashboard",
+    "category": "Dashboard",
+    "tags": [
+      "light admin dashboard",
+      "rounded white cards",
+      "blue x cyan charts",
+      "mint stat pills",
+      "3d character greeting",
+      "soft gray-blue canvas"
+    ],
+    "imagePrompt": "[SUBJECT: an e-commerce admin dashboard web UI] as a clean light-theme app screenshot, soft gray-blue canvas with floating white cards with large rounded corners, top bar with app tabs a rounded search pill and an avatar, KPI cards with mint-green percentage pills, a greeting card featuring a friendly 3D character of a bearded man in a suit at a white laptop with a plant, weekday bar chart, bold blue donut chart, smooth two-tone blue line chart, small sparkline, geometric sans type, sky-blue and cyan accents on white, airy and friendly, 2K",
+    "brief": "Light e-commerce admin dashboard. Top bar: hamburger, app tabs (Apps dropdown, Chat, Calendar, Email), rounded search pill center, dark-mode toggle + notifications + avatar with name/role right. Body on a soft gray-blue canvas, floating white cards (radius ~24px): left column an Earning KPI card (big number, amber dip pill, weekday bar chart, two-line legend) and a Latest Deal card (amount vs target, blue progress bar, recent purchaser avatars); center a Congratulations card (greeting, 38% more sales, three order-status rows with pastel icon chips, 3D character illustration) over a Total Orders line chart with a This Week dropdown; right column a Profit donut card and a Customers sparkline card, both with mint +% pills. Blue/cyan accents only, mint pills for positive deltas. Intent: read sales health at a glance.",
+    "addedAt": "2026-07-24"
+  },
+  {
+    "id": "3.jpg",
+    "file": "/screenshots/3.jpg",
+    "name": "BloomRide windmill hero",
+    "category": "Landing",
+    "tags": [
+      "flat travel illustration",
+      "white serif display on sky",
+      "framed page border",
+      "olive green CTAs",
+      "segmented search bar",
+      "dutch windmill scene"
+    ],
+    "imagePrompt": "[SUBJECT: a Dutch countryside with a large windmill, red-roofed cottages and a cyclist riding through striped tulip fields] as a clean flat vector illustration with subtle noise texture, big flat sky-blue sky filling the upper two thirds, colorful horizontal flower field stripes in pink yellow and green at the bottom, small charming details, room in the upper left for a large headline, 2K",
+    "brief": "Travel landing hero: full-bleed flat illustration (big sky, windmill village, cyclist in tulip fields) inside an off-white page frame border. Upper left: huge white serif display headline in two lines with a period, small light supporting paragraph, olive-green rectangular 'Explore Tours' button + 'Watch Video' text link with play icon. Nav on the illustration: logo left, plain links, 'Log in' text + olive 'Book a tour' button. Bottom: floating white rounded search card with three segmented dropdowns (Where / When / Activity, each icon + label + sublabel) and a green 'Find Your Tour' submit. Intent: search for a tour.",
+    "addedAt": "2026-07-24"
+  },
+  {
     "id": "1.jpg",
     "file": "/screenshots/1.jpg",
     "name": "Floren footer field",
     "category": "Landing",
-    "tags": ["illustrated footer scene", "ghibli wheat field", "links over sky", "serif column headings", "warm yellow x blue", "newsletter inline pill"],
+    "tags": [
+      "illustrated footer scene",
+      "ghibli wheat field",
+      "links over sky",
+      "serif column headings",
+      "warm yellow x blue",
+      "newsletter inline pill"
+    ],
     "imagePrompt": "[SUBJECT: a boy in a blue cap sitting in a golden wheat field, seen from behind] in a hand-painted storybook illustration style, flat gouache texture with subtle grain, wide blue sky taking the upper half with distant blue mountains and a village of small white houses with red roofs on the horizon, warm mustard-yellow field below, soft even daylight, generous empty sky space above for text columns, 2K",
     "brief": "Build a footer section as a full illustrated scene: upper half is open sky holding 4 columns of footer links (serif headings, light sans links), horizon line of mountains and a red-roofed village, lower half a warm golden field with the brand block (logo + one-line mission + social pills) on the left and a 'Stay in the loop' newsletter signup on the right — rounded translucent input with a circular arrow submit button. Palette: sky blue, mustard yellow, cream text. The footer should feel like a picture-book ending, not a utility block. Intent: newsletter signup.",
     "addedAt": "2026-07-24"
@@ -14,19 +55,16 @@
     "file": "/screenshots/2.jpg",
     "name": "Orchard arch hero",
     "category": "Landing",
-    "tags": ["arched foliage frame", "editorial serif headline", "cream x deep green", "glass pill badges", "illustrated dinner scene", "single dark CTA"],
+    "tags": [
+      "arched foliage frame",
+      "editorial serif headline",
+      "cream x deep green",
+      "glass pill badges",
+      "illustrated dinner scene",
+      "single dark CTA"
+    ],
     "imagePrompt": "[SUBJECT: an orange orchard with people sharing a long dinner table between the trees] as a rich flat illustration, dense green foliage with bright oranges and small white blossoms, the trees form tall rounded arch shapes rising from the bottom and sides of the frame like a theater curtain, off-white empty stage in the upper center for a headline, deep green and warm orange palette, painterly texture, 2K",
     "brief": "Landing hero where illustrated orchard trees form rounded arches around the edges, framing an off-white center stage. Center: large dark-green serif display headline (two lines, ends with a period), short muted supporting paragraph, one pill-shaped dark green CTA. Frosted-glass pill badges float over the foliage corners ('Handpicked Quality', 'Delivered Fresh', etc). Nav: small serif logo left, quiet links center, dark pill 'Shop Now' + white pill 'Log in' right. Palette: cream, deep forest green, orange accents only from the artwork. Intent: click Explore/Shop CTA.",
-    "addedAt": "2026-07-24"
-  },
-  {
-    "id": "3.jpg",
-    "file": "/screenshots/3.jpg",
-    "name": "BloomRide windmill hero",
-    "category": "Landing",
-    "tags": ["flat travel illustration", "white serif display on sky", "framed page border", "olive green CTAs", "segmented search bar", "dutch windmill scene"],
-    "imagePrompt": "[SUBJECT: a Dutch countryside with a large windmill, red-roofed cottages and a cyclist riding through striped tulip fields] as a clean flat vector illustration with subtle noise texture, big flat sky-blue sky filling the upper two thirds, colorful horizontal flower field stripes in pink yellow and green at the bottom, small charming details, room in the upper left for a large headline, 2K",
-    "brief": "Travel landing hero: full-bleed flat illustration (big sky, windmill village, cyclist in tulip fields) inside an off-white page frame border. Upper left: huge white serif display headline in two lines with a period, small light supporting paragraph, olive-green rectangular 'Explore Tours' button + 'Watch Video' text link with play icon. Nav on the illustration: logo left, plain links, 'Log in' text + olive 'Book a tour' button. Bottom: floating white rounded search card with three segmented dropdowns (Where / When / Activity, each icon + label + sublabel) and a green 'Find Your Tour' submit. Intent: search for a tour.",
     "addedAt": "2026-07-24"
   }
 ]

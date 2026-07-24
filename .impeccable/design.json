@@ -44,8 +44,7 @@
       "label": { "displayName": "Label", "purpose": "Tags, counts, fine print; widest tracking." }
     },
     "shadows": [
-      { "name": "violet-glow", "value": "0 10px 24px rgba(168,85,247,.5)", "purpose": "The go button's glow; the only blur shadow permitted in the system." },
-      { "name": "glass-edge", "value": "inset 0 1px 1px rgba(255,255,255,.1)", "purpose": "Part of the liquid-glass recipe; an edge highlight, not a depth cue." }
+      { "name": "glass-edge", "value": "inset 0 1px 1px rgba(255,255,255,.1)", "purpose": "Part of the liquid-glass recipe; an edge highlight, not a depth cue. The system's only box-shadow: no blur shadows anywhere." }
     ],
     "motion": [
       { "name": "ease-out", "value": "cubic-bezier(0.22, 1, 0.36, 1)", "purpose": "Default easing for state changes and scroll reveals." },
@@ -80,12 +79,12 @@
       "css": ".ds-btn-bar-alt{cursor:pointer;border:0;background:none;color:var(--cream,#EFF4FF);text-align:left;font-family:'Anton',sans-serif}.ds-btn-bar-alt .t{font-size:20px;text-transform:uppercase;letter-spacing:.04em;display:flex;align-items:center;gap:10px}.ds-btn-bar-alt .bar{display:block;height:6px;background:linear-gradient(90deg,#b724ff,#7c3aed);margin-top:8px;transition:transform .25s cubic-bezier(.22,1,.36,1);transform-origin:left}.ds-btn-bar-alt:hover .bar,.ds-btn-bar-alt:focus-visible .bar{transform:scaleX(.65)}"
     },
     {
-      "name": "Go Button",
-      "kind": "button",
-      "refersTo": "button-go",
-      "description": "48px violet-gradient circle with a cream chevron; carries the system's only glow shadow. Opens a card.",
-      "html": "<button class=\"ds-btn-go\" aria-label=\"open\"><svg viewBox=\"0 0 24 24\"><path d=\"m9 5 7 7-7 7\"/></svg></button>",
-      "css": ".ds-btn-go{width:48px;height:48px;border-radius:50%;border:0;cursor:pointer;background:linear-gradient(135deg,#b724ff,#7c3aed);color:var(--cream,#EFF4FF);display:grid;place-items:center;box-shadow:0 10px 24px rgba(168,85,247,.5);transition:transform .2s cubic-bezier(.22,1,.36,1)}.ds-btn-go:hover,.ds-btn-go:focus-visible{transform:scale(1.1)}.ds-btn-go svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.4}"
+      "name": "Open Cue",
+      "kind": "custom",
+      "refersTo": "card",
+      "description": "The card's action signal: OPEN in Anton over a 4px Signal Lime bar. Decorative; the whole card is the button, and the bar responds to card hover.",
+      "html": "<span class=\"ds-open-cue\"><span class=\"t\">Open</span><span class=\"bar\"></span></span>",
+      "css": ".ds-open-cue{display:inline-flex;flex-direction:column;align-items:flex-start}.ds-open-cue .t{font-family:'Anton',sans-serif;font-size:15px;letter-spacing:.08em;text-transform:uppercase;color:var(--cream,#EFF4FF)}.ds-open-cue .bar{display:block;align-self:stretch;height:4px;background:var(--neon,#6FFF00);margin-top:5px;transform-origin:left;transition:transform .25s cubic-bezier(.22,1,.36,1)}.ds-open-cue:hover .bar{transform:scaleX(.65)}"
     },
     {
       "name": "Navigation Pill",
@@ -119,28 +118,28 @@
       "Deep-navy space scene (nebula + stars + noise) behind every major section",
       "All type uppercase except the cursive accent; mono for everything that isn't a heading",
       "Liquid glass as the only container treatment; no opaque panels",
-      "One neon accent doing all interactive feedback; violet reserved for the circular go button",
+      "One neon accent doing all interactive feedback; violet lives only in the alt bar gradient and the nebula backdrop",
       "Sections capped at 1831px; section corners 32px, media 24px",
       "One entrance choreography, then restraint: reveals ≤650ms, state changes ≤300ms"
     ],
     "rules": [
       { "name": "The Closed Palette Rule", "body": "Five tokens, no additions. Need a gray? Use Starlight Cream at reduced opacity. Need emphasis? Use scale or the accent, never a new hue.", "section": "colors" },
-      { "name": "The Gradient Cage Rule", "body": "The violets exist only as the 135deg pair on the go button (and the alt bar). A flat violet fill anywhere is a violation.", "section": "colors" },
+      { "name": "The Gradient Cage Rule", "body": "The violets exist only inside gradients: the alt bar-button underline and the nebula backdrop. A flat violet fill anywhere is a violation.", "section": "colors" },
       { "name": "The Case Rule", "body": "Everything is uppercase except Condiment, which is never uppercase.", "section": "typography" },
       { "name": "The Overlap Rule", "body": "Condiment never sits in its own row. It overlaps a heading's corner, slightly rotated, or it doesn't appear.", "section": "typography" },
-      { "name": "The One Shadow Rule", "body": "The go button's violet glow is the only blur shadow in the system. Any other box-shadow with blur is forbidden.", "section": "elevation" }
+      { "name": "The No-Blur Rule", "body": "No blur shadows anywhere. The glass edge inset is the system's only box-shadow, and it is an edge highlight, not depth.", "section": "elevation" }
     ],
     "dos": [
       "Do keep every section inside the 1831px max-width wrap, sections at 32px radius, media at 24px.",
       "Do make new interactive elements answer in Signal Lime (#6FFF00): bar, glow, or text shift; nothing else signals interactivity.",
       "Do derive every gray from Starlight Cream opacity steps (.8 / .7 / .6 / .45).",
       "Do animate with transform and opacity only, easing on --ease-out / --ease-out-expo, and keep exits at ~75% of enter durations.",
-      "Do reuse BarButton / GoButton from src/ui.jsx instead of restyling <button>."
+      "Do reuse BarButton from src/ui.jsx instead of restyling <button>."
     ],
     "donts": [
       "Don't use emoji in the UI.",
       "Don't introduce colors outside the five tokens; no new grays, no flat violet fills.",
-      "Don't add blur shadows anywhere except the go button's violet glow.",
+      "Don't add blur shadows anywhere; depth is glass layering, never shadow.",
       "Don't set normal-case type in anything but Condiment.",
       "Don't give buttons backgrounds, borders, or boxes; a bar button is a word and a bar.",
       "Don't animate layout properties (width, height, margins) or ship motion that ignores prefers-reduced-motion.",
