@@ -1,76 +1,199 @@
-# Design.Shelf — Design System
+---
+name: Design.Shelf
+description: A local archive of saved design screens, fixed beyond time and place
+colors:
+  abyss-navy: "#010828"
+  starlight-cream: "#EFF4FF"
+  signal-lime: "#6FFF00"
+  nebula-violet: "#b724ff"
+  deep-violet: "#7c3aed"
+typography:
+  display:
+    fontFamily: "Anton, sans-serif"
+    fontSize: "clamp(40px, 7.5vw, 90px)"
+    fontWeight: 400
+    lineHeight: 1
+    letterSpacing: "normal"
+  headline:
+    fontFamily: "Anton, sans-serif"
+    fontSize: "clamp(32px, 4.6vw, 60px)"
+    fontWeight: 400
+    lineHeight: 1.05
+  title:
+    fontFamily: "Anton, sans-serif"
+    fontSize: "clamp(18px, 2vw, 26px)"
+    fontWeight: 400
+    lineHeight: 1
+  script:
+    fontFamily: "Condiment, cursive"
+    fontSize: "clamp(24px, 3.4vw, 48px)"
+    fontWeight: 400
+    lineHeight: 1
+  body:
+    fontFamily: "IBM Plex Mono, monospace"
+    fontSize: "13px"
+    fontWeight: 400
+    lineHeight: 1.8
+    letterSpacing: "0.04em"
+  label:
+    fontFamily: "IBM Plex Mono, monospace"
+    fontSize: "11px"
+    fontWeight: 400
+    lineHeight: 1.4
+    letterSpacing: "0.08em"
+rounded:
+  tag: "14px"
+  overlay: "20px"
+  media: "24px"
+  navpill: "28px"
+  section: "32px"
+  pill: "99px"
+  circle: "50%"
+components:
+  button-bar:
+    textColor: "{colors.starlight-cream}"
+  button-bar-alt:
+    textColor: "{colors.starlight-cream}"
+  button-go:
+    backgroundColor: "{colors.deep-violet}"
+    textColor: "{colors.starlight-cream}"
+    rounded: "{rounded.circle}"
+    size: "48px"
+  tag:
+    textColor: "{colors.starlight-cream}"
+    rounded: "{rounded.tag}"
+    padding: "10px 16px"
+  card:
+    rounded: "{rounded.section}"
+    padding: "18px"
+  nav:
+    rounded: "{rounded.navpill}"
+    padding: "24px 52px"
+  toast:
+    backgroundColor: "{colors.signal-lime}"
+    textColor: "{colors.abyss-navy}"
+    rounded: "{rounded.pill}"
+    padding: "10px 20px"
+---
 
-Single source of truth for this app's theme. Every new page/component must follow it exactly.
-(A living sample of every token is on the `#/design` page in the app.)
+# Design System: Design.Shelf
 
-The app: a local design-screenshot archive — reads images from a folder, groups them by
-design type (landing / dashboard / mobile etc.), click an image to open a modal with the
-full view + keyword tags + "Copy image prompt" and "Copy brief" buttons (copies to the
-clipboard with a neon-green pill feedback floating bottom-center).
+## 1. Overview
 
-Style: dark space NFT-landing theme (based on the Orbis.Nft system).
+**Creative North Star: "The Orbital Archive"**
 
-## Fonts (Google Fonts)
+A shelf drifting in deep space. Every screen you ever saved is cargo in a dark hold: nebula gradients and twinkling stars behind, noise texture over everything, mono telemetry labels naming each item. The surface is a personal tool, but it presents itself like an NFT landing page (the reference system is Orbis.Nft), because in this app the collection IS the show.
 
-| Font | Used for | Rule |
-|---|---|---|
-| **Anton** | every heading, nav, big buttons | always uppercase |
-| **Condiment** | cursive accent over headings | always normal-case |
-| **IBM Plex Mono** | body, labels, metadata | uppercase, letter-spacing 0.04–0.08em |
+The component doctrine is **loud type, quiet chrome**. Anton does the shouting in full uppercase; containers are barely-there liquid glass; buttons are words with a neon bar under them, not boxes. Condiment cursive is the single human touch, always overlapping a heading at a slight tilt. Motion follows the same split: one orchestrated hero entrance (headline lines rise from clips, staggered), quiet scroll reveals everywhere else, and 200ms exits. Transform and opacity only; `prefers-reduced-motion` silences all of it.
 
-## Colors
+This system explicitly rejects: emoji in the UI, any color outside the five tokens, decorative shadows, and normal-case type anywhere but Condiment.
 
-| Token | Hex | Used for |
-|---|---|---|
-| bg | `#010828` | deep navy background |
-| cream | `#EFF4FF` | all text |
-| neon | `#6FFF00` | accent: cursive type, button underline bars, pill feedback |
-| purple A | `#b724ff` | circular arrow-button gradient start |
-| purple B | `#7c3aed` | circular arrow-button gradient end |
+**Key Characteristics:**
+- Deep-navy space scene (nebula + stars + noise) behind every major section
+- All type uppercase except the cursive accent; mono for everything that isn't a heading
+- Liquid glass as the only container treatment; no opaque panels
+- One neon accent doing all interactive feedback; violet reserved for the circular go button
+- Sections capped at 1831px; section corners 32px, media 24px
+- One entrance choreography, then restraint: reveals ≤650ms, state changes ≤300ms
 
-No other colors allowed.
+## 2. Colors
 
-## Liquid glass
+A closed five-token palette: near-black navy, one warm-white, one loud accent, and a violet pair that exists only inside a gradient.
 
-Used on navbar, cards, tags, overlay bars, social boxes:
+### Primary
+- **Signal Lime** (#6FFF00): the only interactive voice. Cursive accents, button underline bars, the copy-feedback toast, nav hover/active, selection highlight. Usually rendered with `mix-blend-mode: exclusion` over imagery so it stays radioactive on any backdrop.
 
-```css
-.liquid-glass{background:rgba(255,255,255,.01);background-blend-mode:luminosity;backdrop-filter:blur(4px);border:none;box-shadow:inset 0 1px 1px rgba(255,255,255,.1);position:relative;overflow:hidden}
-.liquid-glass::before{content:'';position:absolute;inset:0;border-radius:inherit;padding:1.4px;background:linear-gradient(180deg,rgba(255,255,255,.45) 0%,rgba(255,255,255,.15) 20%,rgba(255,255,255,0) 40%,rgba(255,255,255,0) 60%,rgba(255,255,255,.15) 80%,rgba(255,255,255,.45) 100%);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
-```
+### Secondary
+- **Nebula Violet** (#b724ff): gradient start of the circular go button, and the alt bar-button underline. Never used alone as a flat fill.
+- **Deep Violet** (#7c3aed): gradient end of the same pair; also seeds the nebula backdrop glow.
 
-## Texture overlay
+### Neutral
+- **Abyss Navy** (#010828): the page. Every section sits on it; the space scene is painted over it.
+- **Starlight Cream** (#EFF4FF): all text. Secondary emphasis comes from opacity steps of this one color (.8 body, .7 labels, .6 metadata, .45 fine print), never from a new gray.
 
-Fixed full-screen layer, z-50, pointer-events-none, noise texture, mix-blend-mode lighten, opacity 0.6.
+### Named Rules
+**The Closed Palette Rule.** Five tokens, no additions. Need a gray? Use Starlight Cream at reduced opacity. Need emphasis? Use scale or the accent, never a new hue.
+**The Gradient Cage Rule.** The violets exist only as the `135deg` pair on the go button (and the alt bar). A flat violet fill anywhere is a violation.
 
-## Page structure
+## 3. Typography
 
-max-width **1831px** on every section.
+**Display Font:** Anton (sans-serif fallback)
+**Body Font:** IBM Plex Mono (monospace fallback)
+**Accent Font:** Condiment (cursive fallback)
 
-- **HERO** — full viewport, 32px rounded bottom corners, nebula + stars
-- **COLLECTION** — heading "COLLECTION OF [saved] SCREENS" + liquid-glass card grid 3/2/1
-- **MODAL** — two columns + cursive category overlapping the title corner
-- **CTA** — 32px rounded top corners, right-aligned text + social box bottom-left
-- **FOOTER** — slim end-of-page bar: logo left / links center / fine print right
-- **DESIGN** (`#/design`) — design system page: every token rendered live, click to copy
+**Character:** A poster shouting in a server room. Anton compresses headlines into monolithic uppercase slabs; IBM Plex Mono spaces everything else out like telemetry; Condiment scrawls one lime word across the formality.
 
-Corner radii: sections 32px / media 24px.
+### Hierarchy
+- **Display** (400, clamp(40px, 7.5vw, 90px), line-height 1): hero headline only, uppercase.
+- **Headline** (400, clamp(32px, 4.6vw, 60px), line-height 1.05): section titles ("Collection of saved screens"), CTA, uppercase, often with an indented second line.
+- **Title** (400, clamp(18px, 2vw, 26px)): group labels and nav-scale UI type, uppercase.
+- **Script** (400, clamp(24px, 3.4vw, 48px)): Condiment, normal-case, Signal Lime, `mix-blend-mode: exclusion`, rotated -1 to -2deg, absolutely positioned to overlap its heading.
+- **Body** (400, 12-14px, line-height 1.8, letter-spacing 0.04em): IBM Plex Mono, uppercase.
+- **Label** (400, 10-12px, letter-spacing 0.08-0.1em): IBM Plex Mono, uppercase; metadata, tags, fine print.
 
-## Motion
+### Named Rules
+**The Case Rule.** Everything is uppercase except Condiment, which is never uppercase.
+**The Overlap Rule.** Condiment never sits in its own row. It overlaps a heading's corner, slightly rotated, or it doesn't appear.
 
-Tokens: `--ease-out` cubic-bezier(.22,1,.36,1) for state changes · `--ease-out-expo` cubic-bezier(.16,1,.3,1) for entrances. Never bounce or elastic.
+## 4. Elevation
 
-Durations: entrances 500–800ms · state changes ≤300ms · exits ~75% of the enter time.
+Flat glass, not shadows. Depth comes from layering: the space scene at the bottom, liquid-glass surfaces above it (1.4px gradient edge + 4px backdrop blur + luminosity blend), and the fixed noise texture over everything at 60% lighten. Surfaces read as panes of a window, not floating cards.
 
-- **Hero entrance** — the one orchestrated page-load: nav fades down, headline lines rise out of overflow clips (`.hl` / `.hl-in`), cursive + footer follow, staggered ~100ms
-- **Scroll reveals** — add `data-rev` to any section-level element; it fades/rises 26px on first sight (IntersectionObserver adds `.in`). Group rule lines draw in; grid cards stagger 80ms per column
-- **Modal** — enter: overlay fade + box rise/scale; exit: 200ms fade-down (`.overlay.closing`, kept mounted during exit). Tags trickle in 40ms apart
-- **Feedback** — images fade in on load (`.ld`), card hover zooms media 1.04 and nudges the chevron, toast pill rises with its fade, scroll-cue bar wipes left-to-right on a loop
-- Animate transform/opacity only. `prefers-reduced-motion` kills all of it; reveal hidden states are gated so content never stays hidden
+### Shadow Vocabulary
+- **Violet glow** (`box-shadow: 0 10px 24px rgba(168,85,247,.5)`): the circular go button only.
+- **Glass edge** (`box-shadow: inset 0 1px 1px rgba(255,255,255,.1)`): part of the liquid-glass recipe, not a depth cue.
 
-## Never
+### Named Rules
+**The One Shadow Rule.** The go button's violet glow is the only blur shadow in the system. Any other `box-shadow` with blur is forbidden.
 
-- emoji in the UI
-- colors outside the system
-- blur shadows other than the circular button's purple glow
-- normal-case type except Condiment
+## 5. Components
+
+Loud type, quiet chrome: interactive elements are typography plus one neon cue; containers are glass.
+
+### Buttons
+Shared primitives live in `src/ui.jsx` (`BarButton`, `GoButton`); the CSS is `.btn` / `.go` in `orbis.css`.
+- **Bar button** (`BarButton`): no background, no border. Anton uppercase text (clamp(16px, 1.6vw, 22px)) over a 6px Signal Lime bar. Hover: the bar eases to `scaleX(.65)` from the left, 250ms. This is the primary action shape.
+- **Alt bar button** (`BarButton alt`): identical, bar carries the violet gradient. Use for the secondary action beside a neon one.
+- **Go button** (`GoButton`): 48px circle, `linear-gradient(135deg, #b724ff, #7c3aed)`, Starlight Cream chevron, the system's one glow shadow. Hover: scale 1.1; inside a card, the whole-card hover also scales it 1.06 and nudges the chevron 2px right.
+- **See-all composite**: the oversized Anton "See all folders" lockup with the same neon bar; a one-off, not a primitive.
+- **CTA social links** (`.cta-links`): Mail / Twitter / Github as giant Anton words (clamp(30px, 4vw, 58px)) on the CTA's left, balancing the headline slab, each with a mono telemetry sub-label and a neon bar that draws in on hover. Replaced the old glass social box.
+
+### Chips
+- **Tag**: liquid-glass pill, 14px radius, 10px 16px padding, uppercase mono 12px. In the modal they trickle in 40ms apart.
+
+### Cards / Containers
+- **Corner Style:** cards and sections 32px; media inside 24px; the overlay bar 20px.
+- **Background:** liquid glass over the space scene; screenshot fills the media frame.
+- **Shadow Strategy:** none (see Elevation); hover raises the glass tint to `rgba(255,255,255,.1)` and zooms the image to 1.04 over 900ms.
+- **Internal Padding:** 18px; overlay bar 16px 20px.
+- **Behavior:** images fade in on load; cards reveal on scroll with an 80ms per-column stagger.
+
+### Inputs / Fields
+None exist yet. When one is needed: glass surface, no border at rest, Signal Lime treatment on focus, uppercase mono text.
+
+### Navigation
+- Liquid-glass pill (28px radius, 24px 52px padding), Anton 13px uppercase links, 38px gaps. Default Starlight Cream; hover and active Signal Lime; no underlines. Hidden below 1024px.
+
+### Modal (signature)
+- Two-column glass box (32px radius, image column + metadata column), Condiment category name overlapping the title corner at -2deg. Enters with overlay fade + box rise (500ms ease-out-expo); exits in 200ms via a `.closing` phase that keeps it mounted until the animation lands. Backdrop: `rgba(1,8,40,.72)` + 10px blur.
+
+### Toast (signature)
+- The copy-feedback pill: Signal Lime background, Abyss Navy uppercase mono text, 99px radius, fixed bottom-center; rises 10px with its fade, auto-dismisses in 1.6s.
+
+## 6. Do's and Don'ts
+
+### Do:
+- **Do** keep every section inside the 1831px max-width wrap, sections at 32px radius, media at 24px.
+- **Do** make new interactive elements answer in Signal Lime (#6FFF00): bar, glow, or text shift; nothing else signals interactivity.
+- **Do** derive every gray from Starlight Cream opacity steps (.8 / .7 / .6 / .45).
+- **Do** animate with transform and opacity only, easing on `--ease-out` / `--ease-out-expo`, and keep exits at ~75% of enter durations.
+- **Do** reuse `BarButton` / `GoButton` from `src/ui.jsx` instead of restyling `<button>`.
+
+### Don't:
+- **Don't** use emoji in the UI.
+- **Don't** introduce colors outside the five tokens; no new grays, no flat violet fills.
+- **Don't** add blur shadows anywhere except the go button's violet glow.
+- **Don't** set normal-case type in anything but Condiment.
+- **Don't** give buttons backgrounds, borders, or boxes; a bar button is a word and a bar.
+- **Don't** animate layout properties (width, height, margins) or ship motion that ignores `prefers-reduced-motion`.
+- **Don't** add a second orchestrated entrance; the hero owns page-load choreography, everything else reveals quietly on scroll.

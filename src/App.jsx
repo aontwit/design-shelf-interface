@@ -1,22 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 import DesignPage from './DesignPage.jsx'
+import { BarButton } from './ui.jsx'
 
 const ORDER = ['Landing', 'Dashboard', 'Mobile', 'Spec']
 const NAV = ['All screens', 'Landing', 'Dashboard', 'Mobile']
-
-/* ---------- icons (SVGs from the original mockup) ---------- */
-const MailIcon = () => (
-  <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3 7 9 6 9-6" /></svg>
-)
-const TwitterIcon = () => (
-  <svg viewBox="0 0 24 24"><path d="M22 5.9c-.7.3-1.5.6-2.3.7a4 4 0 0 0-6.9 3.6A11.4 11.4 0 0 1 4.5 6a4 4 0 0 0 1.2 5.4c-.6 0-1.2-.2-1.8-.5a4 4 0 0 0 3.2 4 4 4 0 0 1-1.8.1 4 4 0 0 0 3.8 2.8A8.1 8.1 0 0 1 3 19.6 11.4 11.4 0 0 0 9.3 21c7.5 0 11.7-6.3 11.4-12 .8-.6 1.5-1.3 2-2.1" /></svg>
-)
-const GithubIcon = () => (
-  <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.8c-2.8.6-3.4-1.2-3.4-1.2-.4-1.1-1.1-1.4-1.1-1.4-.9-.6.1-.6.1-.6 1 .1 1.6 1 1.6 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.6-1.4-2.2-.3-4.6-1.1-4.6-5A3.9 3.9 0 0 1 7.8 8.7a3.6 3.6 0 0 1 .1-2.7s.9-.3 2.8 1a9.5 9.5 0 0 1 5 0c2-1.3 2.8-1 2.8-1 .5 1.4.2 2.4.1 2.7a3.9 3.9 0 0 1 1 2.8c0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.9V21c0 .3.2.6.7.5A10 10 0 0 0 12 2" /></svg>
-)
-const ChevronIcon = () => (
-  <svg viewBox="0 0 24 24"><path d="m9 5 7 7-7 7" /></svg>
-)
 
 export default function App() {
   const [items, setItems] = useState(null) // null = loading, [] = error/empty
@@ -153,16 +140,16 @@ export default function App() {
       {/* ============ CTA ============ */}
       <section className="cta space">
         <div className="nebula" /><div className="stars" />
-        <div className="wrap cta-inner">
+        <div className="wrap cta-split">
+          <nav className="cta-links" data-rev aria-label="social links">
+            <button><span className="w">Mail</span><span className="bar" /><span className="sub">01 · direct line</span></button>
+            <button><span className="w">Twitter</span><span className="bar" /><span className="sub">02 · public feed</span></button>
+            <button><span className="w">Github</span><span className="bar" /><span className="sub">03 · source code</span></button>
+          </nav>
           <div className="cta-block" data-rev>
             <span className="cta-script">Go beyond</span>
             <h2><span className="first">Open the shelf.</span>Tag what's saved.<br />Prompt what's next.<br />Follow the signal.</h2>
           </div>
-        </div>
-        <div className="cta-social liquid-glass" data-rev>
-          <button><MailIcon />Mail</button>
-          <button><TwitterIcon />Twitter</button>
-          <button><GithubIcon />Github</button>
         </div>
       </section>
 
@@ -203,12 +190,13 @@ function Card({ item, phIndex, onOpen }) {
         {err
           ? <div className={`ph ph-${phIndex}`} />
           : <img ref={imgRef} className={ld ? 'ld' : ''} src={item.file} alt={item.name} loading="lazy" onLoad={() => setLd(true)} onError={() => setErr(true)} />}
+
         <div className="bar-ov liquid-glass">
           <div style={{ minWidth: 0 }}>
             <div className="lab">{item.name}</div>
             <div className="val">{(item.tags || []).length} tags</div>
           </div>
-          <button className="go" aria-hidden="true" tabIndex={-1}><ChevronIcon /></button>
+          <span className="open-cue" aria-hidden="true"><span className="t">Open</span><span className="bar" /></span>
         </div>
       </div>
     </div>
@@ -244,12 +232,8 @@ function Modal({ item, closing, onClose, copy, flash }) {
             {(item.tags || []).map((t, i) => <span key={t} className="liquid-glass" style={{ '--i': i }}>{t}</span>)}
           </div>
           <div className="acts">
-            <button className="btn" onClick={() => item.imagePrompt ? copy(item.imagePrompt, 'image prompt copied') : flash('no prompt yet, ask claude to fill it')}>
-              <span className="t">Copy image prompt</span><span className="bar" />
-            </button>
-            <button className="btn alt" onClick={() => item.brief ? copy(item.brief, 'brief copied') : flash('no brief yet, ask claude to fill it')}>
-              <span className="t">Copy brief</span><span className="bar" />
-            </button>
+            <BarButton onClick={() => item.imagePrompt ? copy(item.imagePrompt, 'image prompt copied') : flash('no prompt yet, ask claude to fill it')}>Copy image prompt</BarButton>
+            <BarButton alt onClick={() => item.brief ? copy(item.brief, 'brief copied') : flash('no brief yet, ask claude to fill it')}>Copy brief</BarButton>
           </div>
         </div>
       </div>

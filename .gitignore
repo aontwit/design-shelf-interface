@@ -1,6 +1,10 @@
 node_modules/
 dist/
 
+# impeccable live-mode session scratch (config + design.json stay tracked)
+.impeccable/live/sessions/
+.impeccable/live/annotations/
+
 logs
 *.log
 npm-debug.log*

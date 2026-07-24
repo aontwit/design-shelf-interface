@@ -1,5 +1,7 @@
 // Living style guide — source of truth is DESIGN.md; this page renders every token.
 
+import { BarButton, GoButton } from './ui.jsx'
+
 const COLORS = [
   { c: '#010828', label: 'bg' },
   { c: '#EFF4FF', label: 'cream', dark: true },
@@ -75,18 +77,16 @@ export default function DesignPage({ copy }) {
         <Row g="Liquid glass" n="recipe" />
         <div className="ds-glass">
           <div className="ds-glass-demo liquid-glass"><span className="mono-body">navbar / card / tag / overlay bar</span></div>
-          <button className="btn" onClick={() => copy(GLASS, 'glass css copied')}>
-            <span className="t">Copy css</span><span className="bar" />
-          </button>
+          <BarButton onClick={() => copy(GLASS, 'glass css copied')}>Copy css</BarButton>
         </div>
 
         <Row g="Components" n="samples" />
         <div className="ds-samples">
           <nav className="nav liquid-glass"><a className="on">Active</a><a>Link</a><a>Link</a></nav>
           <div className="tags"><span className="liquid-glass">tag label</span><span className="liquid-glass">neon pill</span></div>
-          <button className="go" aria-label="open sample"><svg viewBox="0 0 24 24"><path d="m9 5 7 7-7 7" /></svg></button>
-          <button className="btn"><span className="t">Neon bar button</span><span className="bar" /></button>
-          <button className="btn alt"><span className="t">Purple bar button</span><span className="bar" /></button>
+          <GoButton label="open sample" />
+          <BarButton>Neon bar button</BarButton>
+          <BarButton alt>Purple bar button</BarButton>
         </div>
 
         <Row g="Layout" n="rules" />

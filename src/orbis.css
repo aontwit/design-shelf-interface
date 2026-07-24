@@ -87,7 +87,7 @@ body{background:var(--bg);color:var(--cream);font-family:var(--mono);overflow-x:
 .seeall .r1{display:flex;align-items:end;gap:12px}
 .seeall .big{font-family:var(--grotesk);font-size:clamp(32px,4.6vw,60px);line-height:.9;text-transform:uppercase}
 .seeall .stack{display:flex;flex-direction:column;font-family:var(--grotesk);font-size:clamp(14px,1.8vw,24px);line-height:1;text-transform:uppercase}
-.seeall .bar{height:clamp(6px,.7vw,10px);background:var(--neon);margin-top:10px;transition:transform .25s;transform-origin:left}
+.seeall .bar{height:clamp(6px,.7vw,10px);background:var(--neon);margin-top:10px;transition:transform .25s var(--ease-out);transform-origin:left}
 .seeall:hover .bar{transform:scaleX(.7)}
 
 /* group label row */
@@ -110,7 +110,13 @@ body{background:var(--bg);color:var(--cream);font-family:var(--mono);overflow-x:
 .card .bar-ov{position:absolute;left:10px;right:10px;bottom:10px;border-radius:20px;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:14px}
 .card .bar-ov .lab{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:rgba(239,244,255,.7);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .card .bar-ov .val{font-size:16px;text-transform:uppercase;letter-spacing:.04em}
-.go{width:48px;height:48px;flex:0 0 auto;border-radius:50%;border:0;cursor:pointer;background:linear-gradient(135deg,#b724ff,#7c3aed);color:#fff;display:grid;place-items:center;box-shadow:0 10px 24px rgba(168,85,247,.5);transition:transform .2s}
+/* card action cue: the system's word-and-bar shape instead of a mystery circle */
+.open-cue{flex:0 0 auto;display:flex;flex-direction:column;align-items:flex-start}
+.open-cue .t{font-family:var(--grotesk);font-size:15px;letter-spacing:.08em;text-transform:uppercase;color:var(--cream)}
+.open-cue .bar{display:block;align-self:stretch;height:4px;background:var(--neon);margin-top:5px;transform-origin:left;transition:transform .25s var(--ease-out)}
+.card:hover .open-cue .bar,.card:focus-visible .open-cue .bar{transform:scaleX(.65)}
+
+.go{width:48px;height:48px;flex:0 0 auto;border-radius:50%;border:0;cursor:pointer;background:linear-gradient(135deg,#b724ff,#7c3aed);color:var(--cream);display:grid;place-items:center;box-shadow:0 10px 24px rgba(168,85,247,.5);transition:transform .2s var(--ease-out)}
 .go:hover{transform:scale(1.1)}
 .go svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.4}
 .empty{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:rgba(239,244,255,.5);padding:40px 0}
@@ -132,23 +138,26 @@ body{background:var(--bg);color:var(--cream);font-family:var(--mono);overflow-x:
 .acts{display:flex;gap:14px;margin-top:30px;flex-wrap:wrap}
 .btn{cursor:pointer;border:0;background:none;color:var(--cream);text-align:left}
 .btn .t{font-family:var(--grotesk);font-size:clamp(16px,1.6vw,22px);text-transform:uppercase;letter-spacing:.04em;display:flex;align-items:center;gap:10px}
-.btn .bar{display:block;height:6px;background:var(--neon);margin-top:8px;transition:transform .25s;transform-origin:left}
+.btn .bar{display:block;height:6px;background:var(--neon);margin-top:8px;transition:transform .25s var(--ease-out);transform-origin:left}
 .btn:hover .bar{transform:scaleX(.65)}
 .btn.alt .bar{background:linear-gradient(90deg,#b724ff,#7c3aed)}
 
 /* ---------- CTA ---------- */
 .cta{position:relative;padding:clamp(90px,14vw,200px) 0;border-radius:32px 32px 0 0;margin-top:60px}
-.cta-inner{position:relative;z-index:2;display:flex;justify-content:flex-end}
+.cta-split{position:relative;z-index:2;display:flex;justify-content:space-between;align-items:center;gap:60px}
 .cta-block{position:relative;text-align:right;padding-right:clamp(0px,10vw,20%)}
 .cta-script{position:absolute;left:-8%;top:-16%;font-family:var(--script);font-size:clamp(28px,4.6vw,68px);color:var(--neon);mix-blend-mode:exclusion;transform:rotate(-2deg)}
 .cta h2{font-family:var(--grotesk);font-size:clamp(24px,4.4vw,60px);line-height:1.08;text-transform:uppercase}
 .cta h2 .first{display:block;margin-bottom:clamp(16px,3vw,48px)}
-.cta-social{position:absolute;left:8%;bottom:14%;z-index:2;border-radius:1.25rem;display:flex;flex-direction:column}
-.cta-social button{width:clamp(150px,16vw,268px);padding:20px 24px;background:none;border:0;color:var(--cream);cursor:pointer;display:flex;align-items:center;gap:14px;font-family:var(--grotesk);font-size:13px;letter-spacing:.1em;text-transform:uppercase;transition:background .2s}
-.cta-social button:hover{background:rgba(255,255,255,.08)}
-.cta-social button+button{border-top:1px solid rgba(255,255,255,.1)}
-.cta-social svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8}
-@media(max-width:900px){.cta-social{position:static;margin:60px auto 0;width:max-content}}
+/* social links as co-hero: giant Anton words, neon bar draws in on hover */
+.cta-links{display:flex;flex-direction:column;gap:clamp(18px,2.6vw,30px)}
+.cta-links button{background:none;border:0;cursor:pointer;color:var(--cream);text-align:left;padding:0}
+.cta-links .w{display:block;font-family:var(--grotesk);font-size:clamp(30px,4vw,58px);line-height:1;text-transform:uppercase;transition:color .2s}
+.cta-links button:hover .w,.cta-links button:focus-visible .w{color:var(--neon)}
+.cta-links .bar{display:block;height:6px;background:var(--neon);margin-top:8px;transform:scaleX(0);transform-origin:left;transition:transform .3s var(--ease-out)}
+.cta-links button:hover .bar,.cta-links button:focus-visible .bar{transform:scaleX(1)}
+.cta-links .sub{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(239,244,255,.6);margin-top:6px}
+@media(max-width:900px){.cta-split{flex-direction:column;align-items:flex-end;gap:70px}.cta-links{order:2;align-self:flex-start}}
 
 /* ---------- FOOTER ---------- */
 .footer{border-top:1px solid rgba(239,244,255,.12);padding:44px 0}
@@ -261,5 +270,3 @@ body{background:var(--bg);color:var(--cream);font-family:var(--mono);overflow-x:
 
 /* card chevron responds to the whole card, not just its own hitbox */
 .go svg{transition:transform .2s var(--ease-out)}
-.card:hover .go{transform:scale(1.06)}
-.card:hover .go svg{transform:translateX(2px)}

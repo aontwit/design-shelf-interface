@@ -1,0 +1,150 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-07-24T10:21:06Z",
+  "title": "Design System: Design.Shelf",
+  "extensions": {
+    "colorMeta": {
+      "abyss-navy": {
+        "role": "neutral",
+        "displayName": "Abyss Navy",
+        "canonical": "#010828",
+        "tonalRamp": ["oklch(13% 0.06 265)", "oklch(22% 0.07 265)", "oklch(32% 0.08 265)", "oklch(43% 0.08 265)", "oklch(55% 0.08 265)", "oklch(68% 0.07 265)", "oklch(82% 0.05 265)", "oklch(94% 0.02 265)"]
+      },
+      "starlight-cream": {
+        "role": "neutral",
+        "displayName": "Starlight Cream",
+        "canonical": "#EFF4FF",
+        "tonalRamp": ["oklch(15% 0.02 265)", "oklch(28% 0.02 265)", "oklch(41% 0.02 265)", "oklch(54% 0.02 265)", "oklch(67% 0.02 265)", "oklch(80% 0.02 265)", "oklch(90% 0.015 265)", "oklch(96% 0.01 265)"]
+      },
+      "signal-lime": {
+        "role": "primary",
+        "displayName": "Signal Lime",
+        "canonical": "#6FFF00",
+        "tonalRamp": ["oklch(18% 0.08 133)", "oklch(30% 0.13 133)", "oklch(42% 0.18 133)", "oklch(54% 0.22 133)", "oklch(66% 0.26 133)", "oklch(78% 0.28 133)", "oklch(87% 0.28 133)", "oklch(95% 0.12 133)"]
+      },
+      "nebula-violet": {
+        "role": "secondary",
+        "displayName": "Nebula Violet",
+        "canonical": "#b724ff",
+        "tonalRamp": ["oklch(16% 0.09 305)", "oklch(27% 0.14 305)", "oklch(38% 0.19 305)", "oklch(49% 0.24 305)", "oklch(60% 0.28 305)", "oklch(72% 0.22 305)", "oklch(84% 0.13 305)", "oklch(94% 0.05 305)"]
+      },
+      "deep-violet": {
+        "role": "secondary",
+        "displayName": "Deep Violet",
+        "canonical": "#7c3aed",
+        "tonalRamp": ["oklch(15% 0.08 293)", "oklch(25% 0.13 293)", "oklch(35% 0.18 293)", "oklch(45% 0.22 293)", "oklch(54% 0.24 293)", "oklch(67% 0.19 293)", "oklch(80% 0.12 293)", "oklch(93% 0.04 293)"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero headline only; uppercase Anton slab." },
+      "headline": { "displayName": "Headline", "purpose": "Section titles and CTA; uppercase, often with an indented second line." },
+      "title": { "displayName": "Title", "purpose": "Group labels and nav-scale UI type." },
+      "script": { "displayName": "Script", "purpose": "Condiment accent overlapping a heading, Signal Lime, mix-blend exclusion, tilted -1 to -2deg." },
+      "body": { "displayName": "Body", "purpose": "Uppercase mono paragraphs and metadata rows." },
+      "label": { "displayName": "Label", "purpose": "Tags, counts, fine print; widest tracking." }
+    },
+    "shadows": [
+      { "name": "violet-glow", "value": "0 10px 24px rgba(168,85,247,.5)", "purpose": "The go button's glow; the only blur shadow permitted in the system." },
+      { "name": "glass-edge", "value": "inset 0 1px 1px rgba(255,255,255,.1)", "purpose": "Part of the liquid-glass recipe; an edge highlight, not a depth cue." }
+    ],
+    "motion": [
+      { "name": "ease-out", "value": "cubic-bezier(0.22, 1, 0.36, 1)", "purpose": "Default easing for state changes and scroll reveals." },
+      { "name": "ease-out-expo", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Entrances: hero line rises, modal box." },
+      { "name": "duration-feedback", "value": "250ms", "purpose": "Hover bars, color shifts, toast." },
+      { "name": "duration-reveal", "value": "650ms", "purpose": "Scroll reveals; grid cards stagger 80ms per column." },
+      { "name": "duration-enter", "value": "500-700ms", "purpose": "Hero entrance and modal enter." },
+      { "name": "duration-exit", "value": "200ms", "purpose": "Modal close; exits run ~75% of enter." }
+    ],
+    "breakpoints": [
+      { "name": "grid-single", "value": "640px" },
+      { "name": "modal-stack", "value": "860px" },
+      { "name": "cta-static", "value": "900px" },
+      { "name": "nav-hide-grid-2", "value": "1024px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Bar Button",
+      "kind": "button",
+      "refersTo": "button-bar",
+      "description": "The primary action shape: an Anton uppercase word over a 6px Signal Lime bar that shrinks on hover. No box, no background.",
+      "html": "<button class=\"ds-btn-bar\"><span class=\"t\">Copy image prompt</span><span class=\"bar\"></span></button>",
+      "css": ".ds-btn-bar{cursor:pointer;border:0;background:none;color:var(--cream,#EFF4FF);text-align:left;font-family:'Anton',sans-serif}.ds-btn-bar .t{font-size:20px;text-transform:uppercase;letter-spacing:.04em;display:flex;align-items:center;gap:10px}.ds-btn-bar .bar{display:block;height:6px;background:var(--neon,#6FFF00);margin-top:8px;transition:transform .25s cubic-bezier(.22,1,.36,1);transform-origin:left}.ds-btn-bar:hover .bar,.ds-btn-bar:focus-visible .bar{transform:scaleX(.65)}"
+    },
+    {
+      "name": "Bar Button (Alt)",
+      "kind": "button",
+      "refersTo": "button-bar-alt",
+      "description": "Secondary action beside a neon one; identical shape, the bar carries the violet gradient.",
+      "html": "<button class=\"ds-btn-bar-alt\"><span class=\"t\">Copy brief</span><span class=\"bar\"></span></button>",
+      "css": ".ds-btn-bar-alt{cursor:pointer;border:0;background:none;color:var(--cream,#EFF4FF);text-align:left;font-family:'Anton',sans-serif}.ds-btn-bar-alt .t{font-size:20px;text-transform:uppercase;letter-spacing:.04em;display:flex;align-items:center;gap:10px}.ds-btn-bar-alt .bar{display:block;height:6px;background:linear-gradient(90deg,#b724ff,#7c3aed);margin-top:8px;transition:transform .25s cubic-bezier(.22,1,.36,1);transform-origin:left}.ds-btn-bar-alt:hover .bar,.ds-btn-bar-alt:focus-visible .bar{transform:scaleX(.65)}"
+    },
+    {
+      "name": "Go Button",
+      "kind": "button",
+      "refersTo": "button-go",
+      "description": "48px violet-gradient circle with a cream chevron; carries the system's only glow shadow. Opens a card.",
+      "html": "<button class=\"ds-btn-go\" aria-label=\"open\"><svg viewBox=\"0 0 24 24\"><path d=\"m9 5 7 7-7 7\"/></svg></button>",
+      "css": ".ds-btn-go{width:48px;height:48px;border-radius:50%;border:0;cursor:pointer;background:linear-gradient(135deg,#b724ff,#7c3aed);color:var(--cream,#EFF4FF);display:grid;place-items:center;box-shadow:0 10px 24px rgba(168,85,247,.5);transition:transform .2s cubic-bezier(.22,1,.36,1)}.ds-btn-go:hover,.ds-btn-go:focus-visible{transform:scale(1.1)}.ds-btn-go svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.4}"
+    },
+    {
+      "name": "Navigation Pill",
+      "kind": "nav",
+      "refersTo": "nav",
+      "description": "Liquid-glass pill of Anton uppercase links; hover and active answer in Signal Lime.",
+      "html": "<nav class=\"ds-nav\"><a class=\"on\">All screens</a><a>Landing</a><a>Dashboard</a><a>Mobile</a></nav>",
+      "css": ".ds-nav{border-radius:28px;padding:24px 52px;display:flex;gap:38px;background:rgba(255,255,255,.01);backdrop-filter:blur(4px);box-shadow:inset 0 1px 1px rgba(255,255,255,.1);position:relative;overflow:hidden}.ds-nav::before{content:'';position:absolute;inset:0;border-radius:inherit;padding:1.4px;background:linear-gradient(180deg,rgba(255,255,255,.45) 0%,rgba(255,255,255,.15) 20%,rgba(255,255,255,0) 40%,rgba(255,255,255,0) 60%,rgba(255,255,255,.15) 80%,rgba(255,255,255,.45) 100%);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}.ds-nav a{font-family:'Anton',sans-serif;font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--cream,#EFF4FF);text-decoration:none;transition:color .2s;cursor:pointer}.ds-nav a:hover,.ds-nav a:focus-visible,.ds-nav a.on{color:var(--neon,#6FFF00)}"
+    },
+    {
+      "name": "Tag",
+      "kind": "chip",
+      "refersTo": "tag",
+      "description": "Liquid-glass keyword pill on modal metadata; uppercase mono.",
+      "html": "<span class=\"ds-tag\">dark hero</span>",
+      "css": ".ds-tag{border-radius:14px;padding:10px 16px;font-family:'IBM Plex Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--cream,#EFF4FF);background:rgba(255,255,255,.01);backdrop-filter:blur(4px);box-shadow:inset 0 1px 1px rgba(255,255,255,.1);display:inline-block;position:relative;overflow:hidden}.ds-tag::before{content:'';position:absolute;inset:0;border-radius:inherit;padding:1.4px;background:linear-gradient(180deg,rgba(255,255,255,.45) 0%,rgba(255,255,255,.15) 20%,rgba(255,255,255,0) 40%,rgba(255,255,255,0) 60%,rgba(255,255,255,.15) 80%,rgba(255,255,255,.45) 100%);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}"
+    },
+    {
+      "name": "Copy Toast",
+      "kind": "custom",
+      "refersTo": "toast",
+      "description": "The copy-feedback pill: Signal Lime on Abyss Navy, fixed bottom-center in the app, rises 10px with its fade.",
+      "html": "<span class=\"ds-toast\">image prompt copied</span>",
+      "css": ".ds-toast{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;background:var(--neon,#6FFF00);color:var(--bg,#010828);padding:10px 20px;border-radius:99px;display:inline-block}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Orbital Archive",
+    "overview": "A shelf drifting in deep space. Every screen you ever saved is cargo in a dark hold: nebula gradients and twinkling stars behind, noise texture over everything, mono telemetry labels naming each item. The surface is a personal tool, but it presents itself like an NFT landing page (the reference system is Orbis.Nft), because in this app the collection IS the show. The component doctrine is loud type, quiet chrome. Anton does the shouting in full uppercase; containers are barely-there liquid glass; buttons are words with a neon bar under them, not boxes. Motion follows the same split: one orchestrated hero entrance, quiet scroll reveals everywhere else, and 200ms exits.",
+    "keyCharacteristics": [
+      "Deep-navy space scene (nebula + stars + noise) behind every major section",
+      "All type uppercase except the cursive accent; mono for everything that isn't a heading",
+      "Liquid glass as the only container treatment; no opaque panels",
+      "One neon accent doing all interactive feedback; violet reserved for the circular go button",
+      "Sections capped at 1831px; section corners 32px, media 24px",
+      "One entrance choreography, then restraint: reveals ≤650ms, state changes ≤300ms"
+    ],
+    "rules": [
+      { "name": "The Closed Palette Rule", "body": "Five tokens, no additions. Need a gray? Use Starlight Cream at reduced opacity. Need emphasis? Use scale or the accent, never a new hue.", "section": "colors" },
+      { "name": "The Gradient Cage Rule", "body": "The violets exist only as the 135deg pair on the go button (and the alt bar). A flat violet fill anywhere is a violation.", "section": "colors" },
+      { "name": "The Case Rule", "body": "Everything is uppercase except Condiment, which is never uppercase.", "section": "typography" },
+      { "name": "The Overlap Rule", "body": "Condiment never sits in its own row. It overlaps a heading's corner, slightly rotated, or it doesn't appear.", "section": "typography" },
+      { "name": "The One Shadow Rule", "body": "The go button's violet glow is the only blur shadow in the system. Any other box-shadow with blur is forbidden.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do keep every section inside the 1831px max-width wrap, sections at 32px radius, media at 24px.",
+      "Do make new interactive elements answer in Signal Lime (#6FFF00): bar, glow, or text shift; nothing else signals interactivity.",
+      "Do derive every gray from Starlight Cream opacity steps (.8 / .7 / .6 / .45).",
+      "Do animate with transform and opacity only, easing on --ease-out / --ease-out-expo, and keep exits at ~75% of enter durations.",
+      "Do reuse BarButton / GoButton from src/ui.jsx instead of restyling <button>."
+    ],
+    "donts": [
+      "Don't use emoji in the UI.",
+      "Don't introduce colors outside the five tokens; no new grays, no flat violet fills.",
+      "Don't add blur shadows anywhere except the go button's violet glow.",
+      "Don't set normal-case type in anything but Condiment.",
+      "Don't give buttons backgrounds, borders, or boxes; a bar button is a word and a bar.",
+      "Don't animate layout properties (width, height, margins) or ship motion that ignores prefers-reduced-motion.",
+      "Don't add a second orchestrated entrance; the hero owns page-load choreography, everything else reveals quietly on scroll."
+    ]
+  }
+}
