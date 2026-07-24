@@ -56,6 +56,18 @@ max-width **1831px** on every section.
 
 Corner radii: sections 32px / media 24px.
 
+## Motion
+
+Tokens: `--ease-out` cubic-bezier(.22,1,.36,1) for state changes · `--ease-out-expo` cubic-bezier(.16,1,.3,1) for entrances. Never bounce or elastic.
+
+Durations: entrances 500–800ms · state changes ≤300ms · exits ~75% of the enter time.
+
+- **Hero entrance** — the one orchestrated page-load: nav fades down, headline lines rise out of overflow clips (`.hl` / `.hl-in`), cursive + footer follow, staggered ~100ms
+- **Scroll reveals** — add `data-rev` to any section-level element; it fades/rises 26px on first sight (IntersectionObserver adds `.in`). Group rule lines draw in; grid cards stagger 80ms per column
+- **Modal** — enter: overlay fade + box rise/scale; exit: 200ms fade-down (`.overlay.closing`, kept mounted during exit). Tags trickle in 40ms apart
+- **Feedback** — images fade in on load (`.ld`), card hover zooms media 1.04 and nudges the chevron, toast pill rises with its fade, scroll-cue bar wipes left-to-right on a loop
+- Animate transform/opacity only. `prefers-reduced-motion` kills all of it; reveal hidden states are gated so content never stays hidden
+
 ## Never
 
 - emoji in the UI

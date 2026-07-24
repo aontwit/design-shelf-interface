@@ -19,6 +19,16 @@ const RULES = [
   'never: emoji in UI, colors outside the system, normal-case except Condiment',
 ]
 
+const MOTION = [
+  'easing: --ease-out (state changes) / --ease-out-expo (entrances) — never bounce',
+  'durations: entrances 500–800ms · state changes ≤300ms · exits ~75% of enter',
+  'hero: one orchestrated load — nav drops, headline lines rise from clips, staggered',
+  'scroll reveals: put data-rev on section-level elements, .in added on first sight',
+  'modal: fade+rise enter, 200ms .closing exit — keep it mounted while closing',
+  'feedback: img.ld fade on load, card hover zoom 1.04, toast rises, cue bar wipes',
+  'transform + opacity only — prefers-reduced-motion disables everything',
+]
+
 function Row({ g, n }) {
   return (
     <div className="group-row"><span className="g">{g}</span><span className="n">{n}</span><span className="ln" /></div>
@@ -35,7 +45,7 @@ export default function DesignPage({ copy }) {
         </div>
 
         <h1 className="col-title">Design<span className="ind"><span className="sc">living</span>system</span></h1>
-        <p className="ds-note">// source of truth: DESIGN.md — every token on this page is live, click to copy</p>
+        <p className="ds-note">// source of truth: DESIGN.md. every token on this page is live, click to copy</p>
 
         <Row g="Colors" n="05 tokens" />
         <div className="palette">
@@ -82,6 +92,11 @@ export default function DesignPage({ copy }) {
         <Row g="Layout" n="rules" />
         <ul className="ds-rules">
           {RULES.map((r) => <li key={r}>{r}</li>)}
+        </ul>
+
+        <Row g="Motion" n="rules" />
+        <ul className="ds-rules">
+          {MOTION.map((r) => <li key={r}>{r}</li>)}
         </ul>
       </div>
     </main>

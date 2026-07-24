@@ -30,8 +30,15 @@ export default function App() {
     fetch('/data.json').then((r) => r.json()).then(setItems).catch(() => setItems([]))
   }, [])
 
+  // two-phase close so the exit animation (.overlay.closing) can play before unmount
+  const [closing, setClosing] = useState(false)
+  const closeModal = () => {
+    setClosing(true)
+    setTimeout(() => { setCur(null); setClosing(false) }, 200)
+  }
+
   useEffect(() => {
-    const onKey = (e) => e.key === 'Escape' && setCur(null)
+    const onKey = (e) => e.key === 'Escape' && closeModal()
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
   }, [])
@@ -65,6 +72,17 @@ export default function App() {
     document.getElementById('collection')?.scrollIntoView({ behavior: 'smooth' })
   }
 
+  // scroll reveals: everything tagged data-rev fades/rises in once, on first sight
+  useEffect(() => {
+    const els = document.querySelectorAll('[data-rev]:not(.in)')
+    if (!els.length) return
+    const io = new IntersectionObserver((es) => {
+      es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target) } })
+    }, { threshold: 0.15 })
+    els.forEach((el) => io.observe(el))
+    return () => io.disconnect()
+  }, [items, cat, route])
+
   return (
     <>
       <div className="texture" />
@@ -78,7 +96,8 @@ export default function App() {
           <div className="logo">Design.Shelf</div>
           <nav className="nav liquid-glass">
             {NAV.map((c) => (
-              <a key={c} className={cat === c ? 'on' : ''} onClick={() => pickCat(c)}>{c}</a>
+              <a key={c} role="button" tabIndex={0} className={cat === c ? 'on' : ''} onClick={() => pickCat(c)}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pickCat(c) } }}>{c}</a>
             ))}
             <a href="#/design">Design</a>
           </nav>
@@ -87,7 +106,10 @@ export default function App() {
         <div className="wrap hero-main">
           <div className="hero-inner">
             <div className="h-title">
-              <h1>Every screen<br /><span className="paren">(</span> you <span className="paren">)</span> ever saved</h1>
+              <h1>
+                <span className="hl"><span className="hl-in">Every screen</span></span>
+                <span className="hl"><span className="hl-in"><span className="paren">(</span> you <span className="paren">)</span> ever saved</span></span>
+              </h1>
               <span className="h-script">design shelf</span>
             </div>
           </div>
@@ -101,7 +123,7 @@ export default function App() {
       {/* ============ COLLECTION ============ */}
       <section className="collection" id="collection">
         <div className="wrap">
-          <div className="col-head">
+          <div className="col-head" data-rev>
             <h2 className="col-title">Collection of<span className="ind"><span className="sc">saved</span>screens</span></h2>
             <button className="seeall" onClick={() => setCat('All screens')}>
               <span className="r1"><span className="big">See</span><span className="stack"><span>all</span><span>folders</span></span></span>
@@ -110,11 +132,11 @@ export default function App() {
           </div>
           {items === null && <div className="empty">loading…</div>}
           {items !== null && !groups.length && (
-            <div className="empty">No screenshots in this folder yet — drop images and run npm run scan</div>
+            <div className="empty">No screenshots in this folder yet. Drop images and run npm run scan</div>
           )}
           {groups.map((g) => (
             <div key={g.c}>
-              <div className="group-row"><span className="g">{g.c}</span><span className="n">{String(g.list.length).padStart(2, '0')} files</span><span className="ln" /></div>
+              <div className="group-row" data-rev><span className="g">{g.c}</span><span className="n">{String(g.list.length).padStart(2, '0')} files</span><span className="ln" /></div>
               <div className="grid">
                 {g.list.map((it, i) => (
                   <Card key={it.id} item={it} phIndex={(i % 3) + 1} onOpen={() => setCur(it)} />
@@ -126,18 +148,18 @@ export default function App() {
       </section>
 
       {/* ============ MODAL ============ */}
-      {cur && <Modal item={cur} onClose={() => setCur(null)} copy={copy} flash={flash} />}
+      {cur && <Modal item={cur} closing={closing} onClose={closeModal} copy={copy} flash={flash} />}
 
       {/* ============ CTA ============ */}
       <section className="cta space">
         <div className="nebula" /><div className="stars" />
         <div className="wrap cta-inner">
-          <div className="cta-block">
+          <div className="cta-block" data-rev>
             <span className="cta-script">Go beyond</span>
             <h2><span className="first">Open the shelf.</span>Tag what's saved.<br />Prompt what's next.<br />Follow the signal.</h2>
           </div>
         </div>
-        <div className="cta-social liquid-glass">
+        <div className="cta-social liquid-glass" data-rev>
           <button><MailIcon />Mail</button>
           <button><TwitterIcon />Twitter</button>
           <button><GithubIcon />Github</button>
@@ -148,7 +170,7 @@ export default function App() {
 
       <Footer />
 
-      <div id="copied" className={toast ? 'show' : ''}>{toast}</div>
+      <div id="copied" role="status" aria-live="polite" className={toast ? 'show' : ''}>{toast}</div>
     </>
   )
 }
@@ -162,7 +184,7 @@ function Footer() {
           <a href="#/">Shelf</a>
           <a href="#/design">Design system</a>
         </nav>
-        <span className="foot-fine">© 2026 design.shelf — local archive</span>
+        <span className="foot-fine">© 2026 design.shelf · local archive</span>
       </div>
     </footer>
   )
@@ -170,32 +192,46 @@ function Footer() {
 
 function Card({ item, phIndex, onOpen }) {
   const [err, setErr] = useState(false)
+  const [ld, setLd] = useState(false)
+  const imgRef = useRef(null)
+  // cached images can be complete before onLoad attaches; never leave one at opacity 0
+  useEffect(() => { if (imgRef.current?.complete) setLd(true) }, [])
   return (
-    <div className="card liquid-glass" onClick={onOpen}>
+    <div className="card liquid-glass" data-rev role="button" tabIndex={0} aria-label={'open ' + item.name} onClick={onOpen}
+      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onOpen() } }}>
       <div className="media">
         {err
           ? <div className={`ph ph-${phIndex}`} />
-          : <img src={item.file} alt={item.name} loading="lazy" onError={() => setErr(true)} />}
+          : <img ref={imgRef} className={ld ? 'ld' : ''} src={item.file} alt={item.name} loading="lazy" onLoad={() => setLd(true)} onError={() => setErr(true)} />}
         <div className="bar-ov liquid-glass">
           <div style={{ minWidth: 0 }}>
             <div className="lab">{item.name}</div>
             <div className="val">{(item.tags || []).length} tags</div>
           </div>
-          <button className="go" aria-label="open"><ChevronIcon /></button>
+          <button className="go" aria-hidden="true" tabIndex={-1}><ChevronIcon /></button>
         </div>
       </div>
     </div>
   )
 }
 
-function Modal({ item, onClose, copy, flash }) {
+function Modal({ item, closing, onClose, copy, flash }) {
   const [size, setSize] = useState('…')
+  const [ld, setLd] = useState(false)
+  const imgRef = useRef(null)
+  const onImg = () => {
+    const im = imgRef.current
+    if (!im || !im.naturalWidth) return
+    setSize(im.naturalWidth + ' × ' + im.naturalHeight)
+    setLd(true)
+  }
+  useEffect(() => { if (imgRef.current?.complete) onImg() }, [])
   return (
-    <div className="overlay open" onClick={(e) => e.target === e.currentTarget && onClose()}>
+    <div className={'overlay open' + (closing ? ' closing' : '')} role="dialog" aria-modal="true" aria-label={item.name} onClick={(e) => e.target === e.currentTarget && onClose()}>
       <div className="modalbox liquid-glass">
-        <button className="mclose" aria-label="close" onClick={onClose}>✕</button>
+        <button className="mclose" aria-label="close" autoFocus onClick={onClose}>✕</button>
         <div className="media">
-          <img src={item.file} alt={item.name} onLoad={(e) => setSize(e.target.naturalWidth + ' × ' + e.target.naturalHeight)} />
+          <img ref={imgRef} className={ld ? 'ld' : ''} src={item.file} alt={item.name} onLoad={onImg} />
         </div>
         <div>
           <h3>{item.name}<span className="msc">{item.category.toLowerCase()}</span></h3>
@@ -205,13 +241,13 @@ function Modal({ item, onClose, copy, flash }) {
             <span>{size}</span>
           </div>
           <div className="tags">
-            {(item.tags || []).map((t) => <span key={t} className="liquid-glass">{t}</span>)}
+            {(item.tags || []).map((t, i) => <span key={t} className="liquid-glass" style={{ '--i': i }}>{t}</span>)}
           </div>
           <div className="acts">
-            <button className="btn" onClick={() => item.imagePrompt ? copy(item.imagePrompt, 'image prompt copied') : flash('no prompt yet — ask claude to fill it')}>
+            <button className="btn" onClick={() => item.imagePrompt ? copy(item.imagePrompt, 'image prompt copied') : flash('no prompt yet, ask claude to fill it')}>
               <span className="t">Copy image prompt</span><span className="bar" />
             </button>
-            <button className="btn alt" onClick={() => item.brief ? copy(item.brief, 'brief copied') : flash('no brief yet — ask claude to fill it')}>
+            <button className="btn alt" onClick={() => item.brief ? copy(item.brief, 'brief copied') : flash('no brief yet, ask claude to fill it')}>
               <span className="t">Copy brief</span><span className="bar" />
             </button>
           </div>
