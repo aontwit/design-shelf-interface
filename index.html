@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design.Shelf</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Condiment&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#010828; --cream:#EFF4FF; --neon:#6FFF00;
+  --grotesk:'Anton',sans-serif; --script:'Condiment',cursive; --mono:'IBM Plex Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--cream);font-family:var(--mono);overflow-x:hidden}
+::selection{background:var(--neon);color:var(--bg)}
+
+/* ---------- texture overlay ---------- */
+.texture{position:fixed;inset:0;z-index:50;pointer-events:none;mix-blend-mode:lighten;opacity:.6;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.13'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:cover}
+
+/* ---------- liquid glass ---------- */
+.liquid-glass{background:rgba(255,255,255,.01);background-blend-mode:luminosity;
+  backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);border:none;
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.1);position:relative;overflow:hidden}
+.liquid-glass::before{content:'';position:absolute;inset:0;border-radius:inherit;padding:1.4px;
+  background:linear-gradient(180deg,rgba(255,255,255,.45) 0%,rgba(255,255,255,.15) 20%,rgba(255,255,255,0) 40%,rgba(255,255,255,0) 60%,rgba(255,255,255,.15) 80%,rgba(255,255,255,.45) 100%);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+
+.wrap{max-width:1831px;margin:0 auto;padding-left:clamp(18px,4vw,64px);padding-right:clamp(18px,4vw,64px)}
+.grotesk{font-family:var(--grotesk);text-transform:uppercase}
+.script{font-family:var(--script);text-transform:none;color:var(--neon);mix-blend-mode:exclusion;opacity:.9}
+.mono-body{font-family:var(--mono);text-transform:uppercase;letter-spacing:.04em}
+
+/* ---------- space background (แทน video bg) ---------- */
+.space{position:relative;overflow:hidden}
+.space .nebula{position:absolute;inset:-20%;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(46% 38% at 22% 30%,rgba(124,58,237,.32),transparent 70%),
+    radial-gradient(40% 34% at 80% 20%,rgba(23,66,180,.4),transparent 70%),
+    radial-gradient(52% 46% at 62% 86%,rgba(183,36,255,.20),transparent 70%),
+    radial-gradient(30% 26% at 40% 60%,rgba(111,255,0,.05),transparent 70%);
+  filter:blur(2px);animation:drift 26s ease-in-out infinite alternate}
+@keyframes drift{from{transform:translate3d(-1.5%,-1%,0) scale(1)}to{transform:translate3d(1.5%,2%,0) scale(1.06)}}
+.space .stars{position:absolute;inset:0;z-index:0;pointer-events:none;
+  background-image:
+    radial-gradient(1px 1px at 12% 24%,rgba(239,244,255,.9),transparent 100%),
+    radial-gradient(1px 1px at 34% 68%,rgba(239,244,255,.6),transparent 100%),
+    radial-gradient(1.5px 1.5px at 58% 18%,rgba(239,244,255,.85),transparent 100%),
+    radial-gradient(1px 1px at 72% 52%,rgba(239,244,255,.55),transparent 100%),
+    radial-gradient(1.5px 1.5px at 88% 30%,rgba(239,244,255,.8),transparent 100%),
+    radial-gradient(1px 1px at 20% 86%,rgba(239,244,255,.6),transparent 100%),
+    radial-gradient(1px 1px at 66% 84%,rgba(239,244,255,.7),transparent 100%),
+    radial-gradient(1.5px 1.5px at 44% 42%,rgba(239,244,255,.75),transparent 100%),
+    radial-gradient(1px 1px at 6% 55%,rgba(239,244,255,.5),transparent 100%),
+    radial-gradient(1px 1px at 94% 74%,rgba(239,244,255,.65),transparent 100%);
+  animation:twinkle 6s ease-in-out infinite alternate}
+@keyframes twinkle{from{opacity:.5}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+
+/* ---------- HERO ---------- */
+.hero{min-height:100vh;display:flex;flex-direction:column;border-radius:0 0 32px 32px}
+.hero-head{display:flex;align-items:center;justify-content:space-between;padding-top:34px;position:relative;z-index:2}
+.logo{font-family:var(--grotesk);font-size:16px;text-transform:uppercase;letter-spacing:.06em}
+.nav{border-radius:28px;padding:24px 52px;display:flex;gap:38px}
+.nav a{font-family:var(--grotesk);font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--cream);text-decoration:none;transition:color .2s;cursor:pointer}
+.nav a:hover{color:var(--neon)}
+.nav a.on{color:var(--neon)}
+@media(max-width:1024px){.nav{display:none}}
+.socials{display:flex;flex-direction:column;gap:12px}
+.socials button{width:56px;height:56px;border-radius:1rem;border:0;cursor:pointer;color:var(--cream);display:grid;place-items:center;transition:background .2s;background:rgba(255,255,255,.01)}
+.socials button:hover{background:rgba(255,255,255,.1)}
+.socials svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8}
+.hero-main{flex:1;display:flex;align-items:center;position:relative;z-index:2;padding:60px 0}
+.hero-inner{display:flex;justify-content:space-between;align-items:center;width:100%;gap:40px}
+.h-title{position:relative;max-width:780px;margin-left:clamp(0px,6vw,128px)}
+.h-title h1{font-family:var(--grotesk);font-size:clamp(40px,7.5vw,90px);line-height:1;text-transform:uppercase}
+.h-title h1 .paren{color:rgba(239,244,255,.55)}
+.h-script{position:absolute;right:-4%;bottom:-10%;font-family:var(--script);font-size:clamp(24px,3.4vw,48px);color:var(--neon);mix-blend-mode:exclusion;opacity:.9;transform:rotate(-1deg);white-space:nowrap}
+.hero-foot{display:flex;justify-content:space-between;align-items:end;padding-bottom:34px;position:relative;z-index:2;gap:20px;flex-wrap:wrap}
+.hero-foot p{max-width:266px;font-size:clamp(12px,1vw,14px);line-height:1.8;text-transform:uppercase;letter-spacing:.04em;color:rgba(239,244,255,.8)}
+.scroll-cue{font-family:var(--grotesk);font-size:12px;letter-spacing:.2em;text-transform:uppercase;display:flex;align-items:center;gap:12px}
+.scroll-cue i{display:block;width:60px;height:6px;background:var(--neon)}
+
+/* ---------- COLLECTION ---------- */
+.collection{padding:clamp(70px,9vw,130px) 0}
+.col-head{display:flex;justify-content:space-between;align-items:end;gap:30px;flex-wrap:wrap;margin-bottom:52px}
+.col-title{font-family:var(--grotesk);font-size:clamp(32px,4.6vw,60px);line-height:1.05;text-transform:uppercase}
+.col-title .ind{display:block;margin-left:clamp(48px,8vw,128px)}
+.col-title .sc{font-family:var(--script);text-transform:none;color:var(--neon);mix-blend-mode:exclusion;font-size:1.06em;margin-right:.18em}
+.seeall{cursor:pointer;background:none;border:0;color:var(--cream);text-align:left}
+.seeall .r1{display:flex;align-items:end;gap:12px}
+.seeall .big{font-family:var(--grotesk);font-size:clamp(32px,4.6vw,60px);line-height:.9;text-transform:uppercase}
+.seeall .stack{display:flex;flex-direction:column;font-family:var(--grotesk);font-size:clamp(14px,1.8vw,24px);line-height:1;text-transform:uppercase}
+.seeall .bar{height:clamp(6px,.7vw,10px);background:var(--neon);margin-top:10px;transition:transform .25s;transform-origin:left}
+.seeall:hover .bar{transform:scaleX(.7)}
+
+/* group label row */
+.group-row{display:flex;align-items:center;gap:18px;margin:44px 0 24px}
+.group-row .g{font-family:var(--grotesk);font-size:clamp(18px,2vw,26px);text-transform:uppercase}
+.group-row .n{font-size:12px;color:rgba(239,244,255,.6);text-transform:uppercase;letter-spacing:.1em}
+.group-row .ln{flex:1;height:1px;background:rgba(239,244,255,.15)}
+
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+@media(max-width:1024px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.grid{grid-template-columns:1fr}}
+.card{border-radius:32px;padding:18px;transition:background .25s;cursor:pointer}
+.card:hover{background:rgba(255,255,255,.1)}
+.card .media{position:relative;border-radius:24px;overflow:hidden;padding-bottom:100%}
+.card .media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.card .media .ph{position:absolute;inset:0}
+.ph-1{background:radial-gradient(70% 60% at 30% 25%,#7c3aed66,transparent),radial-gradient(60% 55% at 80% 80%,#1742b4aa,transparent),#050f3a}
+.ph-2{background:radial-gradient(70% 60% at 70% 20%,#b724ff55,transparent),radial-gradient(65% 60% at 20% 85%,#1742b4aa,transparent),#04102f}
+.ph-3{background:radial-gradient(75% 65% at 50% 30%,#1742b4bb,transparent),radial-gradient(55% 50% at 85% 75%,#7c3aed55,transparent),#030b2c}
+.card .bar-ov{position:absolute;left:10px;right:10px;bottom:10px;border-radius:20px;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:14px}
+.card .bar-ov .lab{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:rgba(239,244,255,.7);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.card .bar-ov .val{font-size:16px;text-transform:uppercase;letter-spacing:.04em}
+.go{width:48px;height:48px;flex:0 0 auto;border-radius:50%;border:0;cursor:pointer;background:linear-gradient(135deg,#b724ff,#7c3aed);color:#fff;display:grid;place-items:center;box-shadow:0 10px 24px rgba(168,85,247,.5);transition:transform .2s}
+.go:hover{transform:scale(1.1)}
+.go svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.4}
+.empty{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:rgba(239,244,255,.5);padding:40px 0}
+
+/* ---------- MODAL ---------- */
+.overlay{position:fixed;inset:0;z-index:55;display:none;align-items:center;justify-content:center;padding:clamp(12px,3vw,40px);background:rgba(1,8,40,.72);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.overlay.open{display:flex}
+.modalbox{border-radius:32px;padding:clamp(18px,2.6vw,30px);display:grid;grid-template-columns:minmax(240px,420px) 1fr;gap:clamp(18px,3vw,40px);max-width:1100px;width:100%;max-height:90vh;overflow:auto}
+@media(max-width:860px){.modalbox{grid-template-columns:1fr}}
+.modalbox .media{position:relative;border-radius:24px;overflow:hidden;padding-bottom:78%}
+.modalbox .media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.modalbox h3{font-family:var(--grotesk);font-size:clamp(26px,3.4vw,48px);line-height:1;text-transform:uppercase;position:relative;display:inline-block;margin-top:18px}
+.modalbox h3 .msc{position:absolute;right:-14%;top:-40%;font-family:var(--script);font-size:.62em;color:var(--neon);mix-blend-mode:exclusion;transform:rotate(-2deg);text-transform:none;white-space:nowrap}
+.mclose{position:absolute;top:16px;right:20px;background:none;border:0;color:var(--cream);cursor:pointer;font-family:var(--mono);font-size:20px;line-height:1;transition:color .2s;z-index:2}
+.mclose:hover{color:var(--neon)}
+.meta-row{display:flex;gap:26px;margin-top:14px;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:rgba(239,244,255,.6);flex-wrap:wrap}
+.tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.tags span{border-radius:14px;padding:10px 16px;font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+.acts{display:flex;gap:14px;margin-top:30px;flex-wrap:wrap}
+.btn{cursor:pointer;border:0;background:none;color:var(--cream);text-align:left}
+.btn .t{font-family:var(--grotesk);font-size:clamp(16px,1.6vw,22px);text-transform:uppercase;letter-spacing:.04em;display:flex;align-items:center;gap:10px}
+.btn .bar{height:6px;background:var(--neon);margin-top:8px;transition:transform .25s;transform-origin:left}
+.btn:hover .bar{transform:scaleX(.65)}
+.btn.alt .bar{background:linear-gradient(90deg,#b724ff,#7c3aed)}
+
+/* ---------- CTA ---------- */
+.cta{position:relative;padding:clamp(90px,14vw,200px) 0;border-radius:32px 32px 0 0;margin-top:60px}
+.cta-inner{position:relative;z-index:2;display:flex;justify-content:flex-end}
+.cta-block{position:relative;text-align:right;padding-right:clamp(0px,10vw,20%)}
+.cta-script{position:absolute;left:-8%;top:-16%;font-family:var(--script);font-size:clamp(28px,4.6vw,68px);color:var(--neon);mix-blend-mode:exclusion;transform:rotate(-2deg)}
+.cta h2{font-family:var(--grotesk);font-size:clamp(24px,4.4vw,60px);line-height:1.08;text-transform:uppercase}
+.cta h2 .first{display:block;margin-bottom:clamp(16px,3vw,48px)}
+.cta-social{position:absolute;left:8%;bottom:14%;z-index:2;border-radius:1.25rem;display:flex;flex-direction:column}
+.cta-social button{width:clamp(150px,16vw,268px);padding:20px 24px;background:none;border:0;color:var(--cream);cursor:pointer;display:flex;align-items:center;gap:14px;font-family:var(--grotesk);font-size:13px;letter-spacing:.1em;text-transform:uppercase;transition:background .2s}
+.cta-social button:hover{background:rgba(255,255,255,.08)}
+.cta-social button+button{border-top:1px solid rgba(255,255,255,.1)}
+.cta-social svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8}
+@media(max-width:900px){.cta-social{position:static;margin:60px auto 0;width:max-content}}
+
+/* ---------- HANDOFF ---------- */
+.handoff{padding:70px 0 90px;border-top:1px solid rgba(239,244,255,.12)}
+.handoff-in{display:flex;justify-content:space-between;align-items:end;gap:26px;flex-wrap:wrap}
+.palette{display:flex;border-radius:20px;overflow:hidden;border:1px solid rgba(239,244,255,.2)}
+.palette button{width:clamp(70px,9vw,120px);height:64px;border:0;cursor:pointer;position:relative;background:var(--c)}
+.palette button+button{border-left:1px solid rgba(239,244,255,.2)}
+.palette i{position:absolute;left:10px;bottom:8px;font-style:normal;font-family:var(--mono);font-size:10px;letter-spacing:.04em;color:var(--lab,#EFF4FF)}
+.palette button:hover i{text-decoration:underline}
+.spec-btn{cursor:pointer;border:0;background:none;color:var(--cream);text-align:left}
+.spec-btn .t{font-family:var(--grotesk);font-size:clamp(22px,2.6vw,36px);text-transform:uppercase}
+.spec-btn .bar{height:8px;background:var(--neon);margin-top:10px;transition:transform .25s;transform-origin:left}
+.spec-btn:hover .bar{transform:scaleX(.72)}
+.handoff p{font-size:12px;text-transform:uppercase;letter-spacing:.06em;line-height:2;color:rgba(239,244,255,.55);max-width:52ch;margin-top:26px}
+
+#copied{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);z-index:60;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;background:var(--neon);color:var(--bg);padding:10px 20px;border-radius:99px;opacity:0;transition:opacity .25s;pointer-events:none}
+#copied.show{opacity:1}
+</style>
+</head>
+<body>
+<div class="texture"></div>
+
+<!-- ============ HERO ============ -->
+<section class="hero space">
+  <div class="nebula"></div><div class="stars"></div>
+  <div class="wrap hero-head">
+    <div class="logo">Design.Shelf</div>
+    <nav class="nav liquid-glass" id="nav">
+      <a data-cat="All screens" class="on">All screens</a><a data-cat="Landing">Landing</a><a data-cat="Dashboard">Dashboard</a><a data-cat="Mobile">Mobile</a><a href="#handoff">Spec</a>
+    </nav>
+    <div class="socials">
+      <button class="liquid-glass" aria-label="mail"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></button>
+      <button class="liquid-glass" aria-label="twitter"><svg viewBox="0 0 24 24"><path d="M22 5.9c-.7.3-1.5.6-2.3.7a4 4 0 0 0-6.9 3.6A11.4 11.4 0 0 1 4.5 6a4 4 0 0 0 1.2 5.4c-.6 0-1.2-.2-1.8-.5a4 4 0 0 0 3.2 4 4 4 0 0 1-1.8.1 4 4 0 0 0 3.8 2.8A8.1 8.1 0 0 1 3 19.6 11.4 11.4 0 0 0 9.3 21c7.5 0 11.7-6.3 11.4-12 .8-.6 1.5-1.3 2-2.1"/></svg></button>
+      <button class="liquid-glass" aria-label="github"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.8c-2.8.6-3.4-1.2-3.4-1.2-.4-1.1-1.1-1.4-1.1-1.4-.9-.6.1-.6.1-.6 1 .1 1.6 1 1.6 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.6-1.4-2.2-.3-4.6-1.1-4.6-5A3.9 3.9 0 0 1 7.8 8.7a3.6 3.6 0 0 1 .1-2.7s.9-.3 2.8 1a9.5 9.5 0 0 1 5 0c2-1.3 2.8-1 2.8-1 .5 1.4.2 2.4.1 2.7a3.9 3.9 0 0 1 1 2.8c0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.9V21c0 .3.2.6.7.5A10 10 0 0 0 12 2"/></svg></button>
+    </div>
+  </div>
+  <div class="wrap hero-main">
+    <div class="hero-inner">
+      <div class="h-title">
+        <h1>Every screen<br><span class="paren">(</span> you <span class="paren">)</span> ever saved</h1>
+        <span class="h-script">design shelf</span>
+      </div>
+    </div>
+  </div>
+  <div class="wrap hero-foot">
+    <p>A local archive of screens fixed beyond time and place. Sorted, tagged, ready to prompt.</p>
+    <div class="scroll-cue">scroll<i></i></div>
+  </div>
+</section>
+
+<!-- ============ COLLECTION ============ -->
+<section class="collection" id="collection">
+  <div class="wrap">
+    <div class="col-head">
+      <h2 class="col-title">Collection of<span class="ind"><span class="sc">saved</span>screens</span></h2>
+      <button class="seeall" id="seeall">
+        <span class="r1"><span class="big">See</span><span class="stack"><span>all</span><span>folders</span></span></span>
+        <span class="bar"></span>
+      </button>
+    </div>
+    <div id="groups"></div>
+  </div>
+</section>
+
+<!-- ============ MODAL ============ -->
+<div class="overlay" id="overlay">
+  <div class="modalbox liquid-glass">
+    <button class="mclose" id="mclose" aria-label="close">✕</button>
+    <div class="media"><img id="m-img" alt=""></div>
+    <div>
+      <h3><span id="m-name"></span><span class="msc" id="m-cat"></span></h3>
+      <div class="meta-row"><span id="m-folder"></span><span id="m-added"></span><span id="m-size"></span></div>
+      <div class="tags" id="m-tags"></div>
+      <div class="acts">
+        <button class="btn" id="m-copyprompt"><span class="t">Copy image prompt</span><span class="bar"></span></button>
+        <button class="btn alt" id="m-copybrief"><span class="t">Copy brief</span><span class="bar"></span></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ CTA ============ -->
+<section class="cta space">
+  <div class="nebula"></div><div class="stars"></div>
+  <div class="wrap cta-inner">
+    <div class="cta-block">
+      <span class="cta-script">Go beyond</span>
+      <h2><span class="first">Open the shelf.</span>Tag what's saved.<br>Prompt what's next.<br>Follow the signal.</h2>
+    </div>
+  </div>
+  <div class="cta-social liquid-glass">
+    <button><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>Mail</button>
+    <button><svg viewBox="0 0 24 24"><path d="M22 5.9c-.7.3-1.5.6-2.3.7a4 4 0 0 0-6.9 3.6A11.4 11.4 0 0 1 4.5 6a4 4 0 0 0 1.2 5.4c-.6 0-1.2-.2-1.8-.5a4 4 0 0 0 3.2 4 4 4 0 0 1-1.8.1 4 4 0 0 0 3.8 2.8A8.1 8.1 0 0 1 3 19.6 11.4 11.4 0 0 0 9.3 21c7.5 0 11.7-6.3 11.4-12 .8-.6 1.5-1.3 2-2.1"/></svg>Twitter</button>
+    <button><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.8c-2.8.6-3.4-1.2-3.4-1.2-.4-1.1-1.1-1.4-1.1-1.4-.9-.6.1-.6.1-.6 1 .1 1.6 1 1.6 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.6-1.4-2.2-.3-4.6-1.1-4.6-5A3.9 3.9 0 0 1 7.8 8.7a3.6 3.6 0 0 1 .1-2.7s.9-.3 2.8 1a9.5 9.5 0 0 1 5 0c2-1.3 2.8-1 2.8-1 .5 1.4.2 2.4.1 2.7a3.9 3.9 0 0 1 1 2.8c0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.9V21c0 .3.2.6.7.5A10 10 0 0 0 12 2"/></svg>Github</button>
+  </div>
+</section>
+
+<!-- ============ HANDOFF ============ -->
+<section class="handoff" id="handoff">
+  <div class="wrap">
+    <div class="handoff-in">
+      <div class="palette">
+        <button style="--c:#010828" data-hex="#010828"><i>#010828</i></button>
+        <button style="--c:#EFF4FF;--lab:#010828" data-hex="#EFF4FF"><i style="color:#010828">#EFF4FF</i></button>
+        <button style="--c:#6FFF00;--lab:#010828" data-hex="#6FFF00"><i style="color:#010828">#6FFF00</i></button>
+        <button style="--c:#b724ff" data-hex="#b724ff"><i>#b724ff</i></button>
+        <button style="--c:#7c3aed" data-hex="#7c3aed"><i>#7c3aed</i></button>
+      </div>
+      <button class="spec-btn" id="copyspec"><span class="t">Copy spec → Claude Code</span><span class="bar"></span></button>
+    </div>
+    <p>// spec รวมทุกอย่าง: liquid glass, texture overlay, ระบบฟอนต์ anton / condiment / mono, โครงหน้า, การ์ด, modal และปุ่มห้ามหลุดธีม — วางในช่อง claude code ได้ทันที</p>
+  </div>
+</section>
+
+<div id="copied">copied</div>
+
+<script>
+/* ---------- copy + pill (ตามต้นฉบับ) ---------- */
+const ind=document.getElementById('copied');let t;
+function flash(m){ind.textContent=m;ind.classList.add('show');clearTimeout(t);t=setTimeout(()=>ind.classList.remove('show'),1600)}
+function copy(text,msg){const ok=()=>flash(msg);
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(ok).catch(()=>fb(text,ok))}else fb(text,ok)}
+function fb(text,ok){const ta=document.createElement('textarea');ta.value=text;ta.style.cssText='position:fixed;opacity:0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');ok()}catch(e){flash('copy failed')}document.body.removeChild(ta)}
+
+document.querySelectorAll('.palette button').forEach(b=>b.addEventListener('click',()=>copy(b.dataset.hex,'copied '+b.dataset.hex)));
+
+/* ---------- data-driven collection ---------- */
+const ORDER=['Landing','Dashboard','Mobile','Spec'];
+let ITEMS=[],CAT='All screens';
+const groupsEl=document.getElementById('groups');
+
+fetch('/data.json').then(r=>r.json()).then(d=>{ITEMS=d;render()}).catch(()=>{groupsEl.innerHTML='<div class="empty">โหลด data.json ไม่ได้ — รัน npm run scan ก่อน</div>'});
+
+function render(){
+  const pool=CAT==='All screens'?ITEMS:ITEMS.filter(i=>i.category===CAT);
+  const groups=ORDER.map(c=>({c,list:pool.filter(i=>i.category===c)})).filter(g=>g.list.length);
+  if(!groups.length){groupsEl.innerHTML='<div class="empty">ยังไม่มีสกรีนช็อตในหมวดนี้ — วางรูปแล้วรัน npm run scan</div>';return}
+  groupsEl.innerHTML=groups.map(g=>`
+    <div class="group-row"><span class="g">${g.c}</span><span class="n">${String(g.list.length).padStart(2,'0')} files</span><span class="ln"></span></div>
+    <div class="grid">${g.list.map(it=>`
+      <div class="card liquid-glass" data-id="${it.id}">
+        <div class="media"><img src="${it.file}" alt="${it.name}" loading="lazy">
+          <div class="bar-ov liquid-glass"><div style="min-width:0"><div class="lab">${it.name}</div><div class="val">${(it.tags||[]).length} tags</div></div>
+            <button class="go" aria-label="open"><svg viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></svg></button></div>
+        </div>
+      </div>`).join('')}</div>`).join('');
+  groupsEl.querySelectorAll('.card').forEach(c=>c.addEventListener('click',()=>openModal(c.dataset.id)));
+  groupsEl.querySelectorAll('.card img').forEach((img,i)=>img.addEventListener('error',()=>{
+    const ph=document.createElement('div');ph.className='ph ph-'+(i%3+1);img.replaceWith(ph);
+  }));
+}
+
+/* nav filter */
+document.querySelectorAll('#nav a[data-cat]').forEach(a=>a.addEventListener('click',()=>{
+  CAT=a.dataset.cat;
+  document.querySelectorAll('#nav a').forEach(x=>x.classList.toggle('on',x===a));
+  render();
+  document.getElementById('collection').scrollIntoView({behavior:'smooth'});
+}));
+document.getElementById('seeall').addEventListener('click',()=>{
+  CAT='All screens';
+  document.querySelectorAll('#nav a').forEach(x=>x.classList.toggle('on',x.dataset.cat==='All screens'));
+  render();
+});
+
+/* ---------- modal ---------- */
+const overlay=document.getElementById('overlay');
+let CUR=null;
+function openModal(id){
+  CUR=ITEMS.find(i=>i.id===id);if(!CUR)return;
+  const img=document.getElementById('m-img');
+  img.src=CUR.file;img.alt=CUR.name;
+  document.getElementById('m-size').textContent='…';
+  img.onload=()=>document.getElementById('m-size').textContent=img.naturalWidth+' × '+img.naturalHeight;
+  document.getElementById('m-name').textContent=CUR.name;
+  document.getElementById('m-cat').textContent=CUR.category.toLowerCase();
+  document.getElementById('m-folder').textContent='Folder: '+CUR.category.toLowerCase();
+  document.getElementById('m-added').textContent='Added: '+(CUR.addedAt||'—');
+  document.getElementById('m-tags').innerHTML=(CUR.tags||[]).map(tg=>`<span class="liquid-glass">${tg}</span>`).join('');
+  overlay.classList.add('open');
+}
+function closeModal(){overlay.classList.remove('open');CUR=null}
+document.getElementById('mclose').addEventListener('click',closeModal);
+overlay.addEventListener('click',e=>{if(e.target===overlay)closeModal()});
+window.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+document.getElementById('m-copyprompt').addEventListener('click',()=>{
+  if(!CUR)return;
+  CUR.imagePrompt?copy(CUR.imagePrompt,'image prompt copied'):flash('ยังไม่มี prompt — ให้ claude เติมก่อน');
+});
+document.getElementById('m-copybrief').addEventListener('click',()=>{
+  if(!CUR)return;
+  CUR.brief?copy(CUR.brief,'brief copied'):flash('ยังไม่มี brief — ให้ claude เติมก่อน');
+});
+
+/* ---------- spec ---------- */
+const SPEC=`สร้างเว็บแอป local "Design.Shelf": คลังสกรีนช็อตดีไซน์ อ่านรูปจากโฟลเดอร์ที่กำหนด, จัดกลุ่มตามประเภทดีไซน์ (landing / dashboard / mobile ฯลฯ), คลิกภาพเปิด modal แสดงภาพใหญ่ + แท็กคีย์เวิร์ด + ปุ่ม "Copy image prompt" และ "Copy brief" (copy ลง clipboard พร้อม pill feedback สีเขียวนีออนลอยกลางล่างจอ)
+
+สไตล์: ธีม dark space แบบ NFT landing (อ้างอิงระบบ Orbis.Nft) — ต้องตามนี้เป๊ะ:
+
+FONTS (Google Fonts): Anton (ทุก heading, nav, ปุ่มใหญ่ — uppercase เสมอ) / Condiment (cursive accent ทับ heading — normal-case เสมอ) / IBM Plex Mono (body, label, metadata — uppercase, letter-spacing 0.04-0.08em)
+
+COLORS: พื้นหลัง #010828 (deep navy), cream #EFF4FF (ตัวอักษรทั้งหมด), neon #6FFF00 (accent: ตัว cursive, แถบใต้ปุ่ม), ม่วง gradient #b724ff → #7c3aed (ปุ่มลูกศรวงกลม) ห้ามเพิ่มสีอื่น
+
+LIQUID GLASS (ใช้กับ navbar, การ์ด, tag, overlay bar, กล่อง social):
+.liquid-glass{background:rgba(255,255,255,.01);background-blend-mode:luminosity;backdrop-filter:blur(4px);border:none;box-shadow:inset 0 1px 1px rgba(255,255,255,.1);position:relative;overflow:hidden}
+.liquid-glass::before{content:'';position:absolute;inset:0;border-radius:inherit;padding:1.4px;background:linear-gradient(180deg,rgba(255,255,255,.45) 0%,rgba(255,255,255,.15) 20%,rgba(255,255,255,0) 40%,rgba(255,255,255,0) 60%,rgba(255,255,255,.15) 80%,rgba(255,255,255,.45) 100%);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+
+TEXTURE OVERLAY: เลเยอร์ fixed เต็มจอ z-50 pointer-events-none, noise texture, mix-blend-mode lighten, opacity 0.6
+
+โครงหน้า (max-width 1831px ทุก section): HERO เต็ม viewport มุมล่างโค้ง 32px nebula+ดาว / COLLECTION heading "COLLECTION OF [saved] SCREENS" + กริดการ์ด liquid-glass 3/2/1 / MODAL สองคอลัมน์ + cursive หมวดทับมุมชื่อ / CTA มุมบนโค้ง 32px ข้อความชิดขวา + กล่อง social ซ้ายล่าง
+
+ห้าม: อีโมจิใน UI, สีนอกระบบ, เงา blur อื่นนอกจากเงาม่วงของปุ่มวงกลม, ตัวอักษร normal-case ยกเว้น Condiment`;
+document.getElementById('copyspec').addEventListener('click',()=>copy(SPEC,'spec copied — paste in claude code'));
+</script>
+</body>
+</html>
