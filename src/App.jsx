@@ -4,7 +4,7 @@ import DesignPage from './DesignPage.jsx'
 const ORDER = ['Landing', 'Dashboard', 'Mobile', 'Spec']
 const NAV = ['All screens', 'Landing', 'Dashboard', 'Mobile']
 
-/* ---------- icons (SVG เดิมจาก mockup) ---------- */
+/* ---------- icons (SVGs from the original mockup) ---------- */
 const MailIcon = () => (
   <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3 7 9 6 9-6" /></svg>
 )
@@ -110,7 +110,7 @@ export default function App() {
           </div>
           {items === null && <div className="empty">loading…</div>}
           {items !== null && !groups.length && (
-            <div className="empty">ยังไม่มีสกรีนช็อตในหมวดนี้ — วางรูปแล้วรัน npm run scan</div>
+            <div className="empty">No screenshots in this folder yet — drop images and run npm run scan</div>
           )}
           {groups.map((g) => (
             <div key={g.c}>
@@ -208,10 +208,10 @@ function Modal({ item, onClose, copy, flash }) {
             {(item.tags || []).map((t) => <span key={t} className="liquid-glass">{t}</span>)}
           </div>
           <div className="acts">
-            <button className="btn" onClick={() => item.imagePrompt ? copy(item.imagePrompt, 'image prompt copied') : flash('ยังไม่มี prompt — ให้ claude เติมก่อน')}>
+            <button className="btn" onClick={() => item.imagePrompt ? copy(item.imagePrompt, 'image prompt copied') : flash('no prompt yet — ask claude to fill it')}>
               <span className="t">Copy image prompt</span><span className="bar" />
             </button>
-            <button className="btn alt" onClick={() => item.brief ? copy(item.brief, 'brief copied') : flash('ยังไม่มี brief — ให้ claude เติมก่อน')}>
+            <button className="btn alt" onClick={() => item.brief ? copy(item.brief, 'brief copied') : flash('no brief yet — ask claude to fill it')}>
               <span className="t">Copy brief</span><span className="bar" />
             </button>
           </div>

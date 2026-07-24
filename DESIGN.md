@@ -1,38 +1,38 @@
 # Design.Shelf — Design System
 
-Single source of truth สำหรับธีมของแอปนี้ ทุกหน้า/คอมโพเนนต์ใหม่ต้องตามนี้เป๊ะ
-(ตัวอย่างที่มีชีวิตของทุก token อยู่ที่หน้า `#/design` ในแอป)
+Single source of truth for this app's theme. Every new page/component must follow it exactly.
+(A living sample of every token is on the `#/design` page in the app.)
 
-แอปคือ: คลังสกรีนช็อตดีไซน์ local — อ่านรูปจากโฟลเดอร์, จัดกลุ่มตามประเภทดีไซน์
-(landing / dashboard / mobile ฯลฯ), คลิกภาพเปิด modal แสดงภาพใหญ่ + แท็กคีย์เวิร์ด +
-ปุ่ม "Copy image prompt" และ "Copy brief" (copy ลง clipboard พร้อม pill feedback
-สีเขียวนีออนลอยกลางล่างจอ)
+The app: a local design-screenshot archive — reads images from a folder, groups them by
+design type (landing / dashboard / mobile etc.), click an image to open a modal with the
+full view + keyword tags + "Copy image prompt" and "Copy brief" buttons (copies to the
+clipboard with a neon-green pill feedback floating bottom-center).
 
-สไตล์: ธีม dark space แบบ NFT landing (อ้างอิงระบบ Orbis.Nft)
+Style: dark space NFT-landing theme (based on the Orbis.Nft system).
 
 ## Fonts (Google Fonts)
 
-| Font | ใช้กับ | กติกา |
+| Font | Used for | Rule |
 |---|---|---|
-| **Anton** | ทุก heading, nav, ปุ่มใหญ่ | uppercase เสมอ |
-| **Condiment** | cursive accent ทับ heading | normal-case เสมอ |
-| **IBM Plex Mono** | body, label, metadata | uppercase, letter-spacing 0.04–0.08em |
+| **Anton** | every heading, nav, big buttons | always uppercase |
+| **Condiment** | cursive accent over headings | always normal-case |
+| **IBM Plex Mono** | body, labels, metadata | uppercase, letter-spacing 0.04–0.08em |
 
 ## Colors
 
-| Token | Hex | ใช้กับ |
+| Token | Hex | Used for |
 |---|---|---|
-| bg | `#010828` | พื้นหลัง deep navy |
-| cream | `#EFF4FF` | ตัวอักษรทั้งหมด |
-| neon | `#6FFF00` | accent: ตัว cursive, แถบใต้ปุ่ม, pill feedback |
-| purple A | `#b724ff` | จุดเริ่ม gradient ปุ่มลูกศรวงกลม |
-| purple B | `#7c3aed` | จุดจบ gradient ปุ่มลูกศรวงกลม |
+| bg | `#010828` | deep navy background |
+| cream | `#EFF4FF` | all text |
+| neon | `#6FFF00` | accent: cursive type, button underline bars, pill feedback |
+| purple A | `#b724ff` | circular arrow-button gradient start |
+| purple B | `#7c3aed` | circular arrow-button gradient end |
 
-ห้ามเพิ่มสีอื่น
+No other colors allowed.
 
 ## Liquid glass
 
-ใช้กับ navbar, การ์ด, tag, overlay bar, กล่อง social:
+Used on navbar, cards, tags, overlay bars, social boxes:
 
 ```css
 .liquid-glass{background:rgba(255,255,255,.01);background-blend-mode:luminosity;backdrop-filter:blur(4px);border:none;box-shadow:inset 0 1px 1px rgba(255,255,255,.1);position:relative;overflow:hidden}
@@ -41,24 +41,24 @@ Single source of truth สำหรับธีมของแอปนี้ �
 
 ## Texture overlay
 
-เลเยอร์ fixed เต็มจอ z-50 pointer-events-none, noise texture, mix-blend-mode lighten, opacity 0.6
+Fixed full-screen layer, z-50, pointer-events-none, noise texture, mix-blend-mode lighten, opacity 0.6.
 
-## โครงหน้า
+## Page structure
 
-max-width **1831px** ทุก section
+max-width **1831px** on every section.
 
-- **HERO** — เต็ม viewport มุมล่างโค้ง 32px, nebula + ดาว
-- **COLLECTION** — heading "COLLECTION OF [saved] SCREENS" + กริดการ์ด liquid-glass 3/2/1
-- **MODAL** — สองคอลัมน์ + cursive หมวดทับมุมชื่อ
-- **CTA** — มุมบนโค้ง 32px ข้อความชิดขวา + กล่อง social ซ้ายล่าง
-- **FOOTER** — แถบบางท้ายหน้า: logo ซ้าย / ลิงก์กลาง / fine print ขวา
-- **DESIGN** (`#/design`) — หน้า design system: token ทุกตัวเป็นตัวอย่างจริง คลิก copy ได้
+- **HERO** — full viewport, 32px rounded bottom corners, nebula + stars
+- **COLLECTION** — heading "COLLECTION OF [saved] SCREENS" + liquid-glass card grid 3/2/1
+- **MODAL** — two columns + cursive category overlapping the title corner
+- **CTA** — 32px rounded top corners, right-aligned text + social box bottom-left
+- **FOOTER** — slim end-of-page bar: logo left / links center / fine print right
+- **DESIGN** (`#/design`) — design system page: every token rendered live, click to copy
 
-รัศมีมุม: section 32px / media 24px
+Corner radii: sections 32px / media 24px.
 
-## ห้าม
+## Never
 
-- อีโมจิใน UI
-- สีนอกระบบ
-- เงา blur อื่นนอกจากเงาม่วงของปุ่มวงกลม
-- ตัวอักษร normal-case ยกเว้น Condiment
+- emoji in the UI
+- colors outside the system
+- blur shadows other than the circular button's purple glow
+- normal-case type except Condiment

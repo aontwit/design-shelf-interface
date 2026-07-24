@@ -12,11 +12,11 @@ const GLASS = `.liquid-glass{background:rgba(255,255,255,.01);background-blend-m
 .liquid-glass::before{content:'';position:absolute;inset:0;border-radius:inherit;padding:1.4px;background:linear-gradient(180deg,rgba(255,255,255,.45) 0%,rgba(255,255,255,.15) 20%,rgba(255,255,255,0) 40%,rgba(255,255,255,0) 60%,rgba(255,255,255,.15) 80%,rgba(255,255,255,.45) 100%);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}`
 
 const RULES = [
-  'max-width 1831px ทุก section — radius 32px / media 24px',
-  'grid การ์ด 3 / 2 / 1 คอลัมน์ (1024px / 640px)',
-  'texture overlay: fixed เต็มจอ, noise, mix-blend lighten, opacity .6',
-  'พื้นหลัง space: nebula gradients + ดาว twinkle',
-  'ห้าม: อีโมจิใน UI, สีนอกระบบ, normal-case ยกเว้น Condiment',
+  'max-width 1831px on every section — radius 32px / media 24px',
+  'card grid 3 / 2 / 1 columns (breaks at 1024px / 640px)',
+  'texture overlay: fixed full-screen, noise, mix-blend lighten, opacity .6',
+  'space background: nebula gradients + twinkling stars',
+  'never: emoji in UI, colors outside the system, normal-case except Condiment',
 ]
 
 function Row({ g, n }) {
@@ -35,7 +35,7 @@ export default function DesignPage({ copy }) {
         </div>
 
         <h1 className="col-title">Design<span className="ind"><span className="sc">living</span>system</span></h1>
-        <p className="ds-note">// source of truth: DESIGN.md — หน้านี้คือ token ทุกตัวแบบมีชีวิต คลิกเพื่อ copy</p>
+        <p className="ds-note">// source of truth: DESIGN.md — every token on this page is live, click to copy</p>
 
         <Row g="Colors" n="05 tokens" />
         <div className="palette">
@@ -49,11 +49,11 @@ export default function DesignPage({ copy }) {
         <Row g="Typography" n="03 fonts" />
         <div className="ds-fonts">
           <div className="ds-font">
-            <span className="ds-font-name">Anton — heading / nav / ปุ่มใหญ่ — uppercase เสมอ</span>
+            <span className="ds-font-name">Anton — heading / nav / big buttons — always uppercase</span>
             <span className="grotesk ds-sample-grotesk">Every screen ever saved</span>
           </div>
           <div className="ds-font">
-            <span className="ds-font-name">Condiment — cursive accent ทับ heading — normal-case เสมอ</span>
+            <span className="ds-font-name">Condiment — cursive accent over headings — always normal-case</span>
             <span className="script ds-sample-script">design shelf</span>
           </div>
           <div className="ds-font">

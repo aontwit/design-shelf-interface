@@ -26,7 +26,7 @@ body{background:var(--bg);color:var(--cream);font-family:var(--mono);overflow-x:
 .script{font-family:var(--script);text-transform:none;color:var(--neon);mix-blend-mode:exclusion;opacity:.9}
 .mono-body{font-family:var(--mono);text-transform:uppercase;letter-spacing:.04em}
 
-/* ---------- space background (แทน video bg) ---------- */
+/* ---------- space background (in place of video bg) ---------- */
 .space{position:relative;overflow:hidden}
 .space .nebula{position:absolute;inset:-20%;z-index:0;pointer-events:none;
   background:
@@ -166,7 +166,7 @@ body{background:var(--bg);color:var(--cream);font-family:var(--mono);overflow-x:
 .ds-back:hover{color:var(--neon)}
 .ds-note{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:rgba(239,244,255,.55);margin-top:18px}
 .ds .group-row{margin-top:clamp(48px,6vw,80px)}
-.ds .nav{display:flex} /* ตัวอย่างต้องโชว์ทุกความกว้าง override media ที่ซ่อน nav */
+.ds .nav{display:flex} /* sample must show at every width — overrides the media query hiding nav */
 .palette{display:flex;border-radius:20px;overflow:hidden;border:1px solid rgba(239,244,255,.2)}
 .palette button{width:clamp(70px,9vw,120px);height:64px;border:0;cursor:pointer;position:relative;background:var(--c)}
 .palette button+button{border-left:1px solid rgba(239,244,255,.2)}
