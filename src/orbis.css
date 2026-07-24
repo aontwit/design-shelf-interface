@@ -131,7 +131,7 @@ body{background:var(--bg);color:var(--cream);font-family:var(--mono);overflow-x:
 .acts{display:flex;gap:14px;margin-top:30px;flex-wrap:wrap}
 .btn{cursor:pointer;border:0;background:none;color:var(--cream);text-align:left}
 .btn .t{font-family:var(--grotesk);font-size:clamp(16px,1.6vw,22px);text-transform:uppercase;letter-spacing:.04em;display:flex;align-items:center;gap:10px}
-.btn .bar{height:6px;background:var(--neon);margin-top:8px;transition:transform .25s;transform-origin:left}
+.btn .bar{display:block;height:6px;background:var(--neon);margin-top:8px;transition:transform .25s;transform-origin:left}
 .btn:hover .bar{transform:scaleX(.65)}
 .btn.alt .bar{background:linear-gradient(90deg,#b724ff,#7c3aed)}
 
@@ -149,19 +149,41 @@ body{background:var(--bg);color:var(--cream);font-family:var(--mono);overflow-x:
 .cta-social svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8}
 @media(max-width:900px){.cta-social{position:static;margin:60px auto 0;width:max-content}}
 
-/* ---------- HANDOFF ---------- */
-.handoff{padding:70px 0 90px;border-top:1px solid rgba(239,244,255,.12)}
-.handoff-in{display:flex;justify-content:space-between;align-items:end;gap:26px;flex-wrap:wrap}
+/* ---------- FOOTER ---------- */
+.footer{border-top:1px solid rgba(239,244,255,.12);padding:44px 0}
+.foot-in{display:flex;justify-content:space-between;align-items:center;gap:22px;flex-wrap:wrap}
+.footer .logo{color:var(--cream);text-decoration:none}
+.foot-nav{display:flex;gap:26px}
+.foot-nav a{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:rgba(239,244,255,.7);text-decoration:none;transition:color .2s}
+.foot-nav a:hover{color:var(--neon)}
+.foot-fine{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:rgba(239,244,255,.45)}
+
+/* ---------- DESIGN PAGE ---------- */
+.ds{padding:34px 0 clamp(70px,9vw,120px)}
+.ds-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:clamp(48px,7vw,90px)}
+.ds-head .logo{color:var(--cream);text-decoration:none}
+.ds-back{font-size:12px;color:rgba(239,244,255,.7);text-decoration:none;transition:color .2s}
+.ds-back:hover{color:var(--neon)}
+.ds-note{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:rgba(239,244,255,.55);margin-top:18px}
+.ds .group-row{margin-top:clamp(48px,6vw,80px)}
+.ds .nav{display:flex} /* ตัวอย่างต้องโชว์ทุกความกว้าง override media ที่ซ่อน nav */
 .palette{display:flex;border-radius:20px;overflow:hidden;border:1px solid rgba(239,244,255,.2)}
 .palette button{width:clamp(70px,9vw,120px);height:64px;border:0;cursor:pointer;position:relative;background:var(--c)}
 .palette button+button{border-left:1px solid rgba(239,244,255,.2)}
 .palette i{position:absolute;left:10px;bottom:8px;font-style:normal;font-family:var(--mono);font-size:10px;letter-spacing:.04em;color:var(--lab,#EFF4FF)}
 .palette button:hover i{text-decoration:underline}
-.spec-btn{cursor:pointer;border:0;background:none;color:var(--cream);text-align:left}
-.spec-btn .t{font-family:var(--grotesk);font-size:clamp(22px,2.6vw,36px);text-transform:uppercase}
-.spec-btn .bar{height:8px;background:var(--neon);margin-top:10px;transition:transform .25s;transform-origin:left}
-.spec-btn:hover .bar{transform:scaleX(.72)}
-.handoff p{font-size:12px;text-transform:uppercase;letter-spacing:.06em;line-height:2;color:rgba(239,244,255,.55);max-width:52ch;margin-top:26px}
+.ds-fonts{display:grid;gap:30px}
+.ds-font{display:grid;gap:10px}
+.ds-font-name{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:rgba(239,244,255,.55)}
+.ds-sample-grotesk{font-size:clamp(30px,4.5vw,64px);line-height:1}
+.ds-sample-script{font-size:clamp(26px,3.4vw,48px)}
+.ds-glass{display:flex;align-items:end;gap:34px;flex-wrap:wrap}
+.ds-glass-demo{border-radius:24px;padding:34px 40px}
+.ds-samples{display:flex;align-items:center;gap:34px;flex-wrap:wrap}
+.ds-samples .tags{margin-top:0}
+.ds-rules{list-style:none;display:grid;gap:12px}
+.ds-rules li{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:rgba(239,244,255,.75)}
+.ds-rules li::before{content:'— '}
 
 #copied{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);z-index:60;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;background:var(--neon);color:var(--bg);padding:10px 20px;border-radius:99px;opacity:0;transition:opacity .25s;pointer-events:none}
 #copied.show{opacity:1}
