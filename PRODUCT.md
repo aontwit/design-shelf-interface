@@ -47,3 +47,14 @@ Personal tool, but keyboard and screen-reader basics are non-negotiable: visible
 reachable cards and modal, announced copy feedback. Respect prefers-reduced-motion (the
 space theme animates a lot). Contrast targets WCAG AA where it doesn't fight the theme;
 the neon accent on deep navy passes comfortably.
+
+## Search (phase 1)
+
+Serves "a screen can be found in seconds" (Product Purpose).
+
+- One search box, living in the sticky collection filter bar; search rows wait for the filter bar to be on `main` (owner 2026-10-20)
+- Matching: case-insensitive, every typed word must appear somewhere in the screen's name, category, tags, image prompt or brief (owner 2026-10-20)
+- With a folder filter on: search runs inside that folder; the folder counts show matches per folder (owner 2026-10-20)
+- No matches: the existing empty-state line reads `No screens match "<query>"`; no extra button (owner 2026-10-20)
+- Keyboard: `/` jumps to the search box, Esc empties it and gives the full grid back (owner 2026-10-20)
+- Not in phase 1 (owner 2026-10-20): highlighting matched words, keeping the query in the page address, tag filtering, auto-describing new screens, keyboard browsing in the modal
